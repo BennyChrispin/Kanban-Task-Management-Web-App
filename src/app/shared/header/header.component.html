@@ -1,6 +1,7 @@
 <div class="flex min-h-screen">
   <div
     class="flex flex-col min-h-screen bg-white dark:bg-mediumGray w-80 border-r border-lightBlue dark:border-lightGray"
+    *ngIf="isSidebarVisible"
   >
     <div class="pr-8 mt-10">
       <img
@@ -16,53 +17,26 @@
         ALL BOARD (3)
       </h2>
       <div class="mt-4">
-        <button
-          class="flex items-center space-x-4 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-6 text-softGray font-semibold text-lg hover:text-white"
-        >
-          <svg
-            width="16"
-            height="16"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
+        <ng-container *ngIf="board && board.length > 0">
+          <button
+            *ngFor="let boardItem of board"
+            class="flex items-center space-x-4 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-6 text-softGray font-semibold text-lg hover:text-white"
+            (click)="onSelectBoard(boardItem)"
           >
-            <path
-              d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
-            />
-          </svg>
-          <span> Platform Launch </span>
-        </button>
+            <svg
+              width="16"
+              height="16"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+            >
+              <path
+                d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
+              />
+            </svg>
+            <span>{{ boardItem.name }}</span>
+          </button>
+        </ng-container>
 
-        <button
-          class="flex items-center space-x-4 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-6 text-softGray font-semibold text-lg hover:text-white"
-        >
-          <svg
-            width="16"
-            height="16"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-          >
-            <path
-              d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
-            />
-          </svg>
-          <span> Market Plan </span>
-        </button>
-
-        <button
-          class="flex items-center space-x-4 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-6 text-softGray font-semibold text-lg hover:text-white"
-        >
-          <svg
-            width="16"
-            height="16"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-          >
-            <path
-              d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
-            />
-          </svg>
-          <span> Roadmap </span>
-        </button>
         <button
           class="flex items-center space-x-4 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-6 text-primary font-semibold text-lg hover:text-white"
         >
@@ -94,24 +68,24 @@
       </div>
     </div>
 
-    <div class="px-6 mt-auto mb-10">
+    <div class="mt-auto mb-10">
       <div
-        class="bg-lightBlue dark:bg-darkGray rounded-lg p-5 flex items-center justify-between"
+        class="bg-lightBlue dark:bg-darkGray rounded-lg p-5 flex items-center justify-between px-10 mx-8"
       >
         <img
           src="../../../assets/icons/icon-light-theme.svg"
           alt="icon of light"
-          class="w-7 h-7"
+          class="w-6 h-6"
         />
         <button
           (click)="toggleDarkMode()"
           class="p-[5px] w-1/3 rounded-full transition-colors duration-300 ease-in-out bg-primary dark:bg-dark-primary"
         >
           <div
-            class="w-6 h-6 transition-colors duration-300 ease-in-out bg-white dark:bg-dark-white rounded-full"
+            class="w-5 h-5 transition-colors duration-300 ease-in-out bg-white dark:bg-dark-white rounded-full"
             [ngClass]="{
               'translate-x-0': !isDarkMode,
-              'translate-x-9': isDarkMode
+              'translate-x-7': isDarkMode
             }"
           ></div>
         </button>
@@ -119,11 +93,12 @@
         <img
           src="../../../assets/icons/icon-dark-theme.svg"
           alt="icon of dark"
-          class="w-7 h-7"
+          class="w-6 h-6"
         />
       </div>
       <button
-        class="px-3 mt-8 flex items-center space-x-4 text-softGray font-semibold"
+        class="mt-8 flex items-center space-x-4 text-softGray font-semibold hover:bg-skyRed duration-300 transition-all ease-in-out hover:text-primary p-4 px-10 rounded-r-full"
+        (click)="toggleSidebar()"
       >
         <img
           src="../../../assets/icons/icon-hide-sidebar.svg"
@@ -165,7 +140,19 @@
 
     <!-- Middle Content -->
     <div class="p-6 flex-1">
-      <app-task></app-task>
+      <app-board [selectedBoardId]="selectedBoardId"></app-board>
     </div>
   </div>
 </div>
+
+<button
+  *ngIf="!isSidebarVisible"
+  class="absolute bottom-14 p-4 rounded-r-full px-6 bg-primary flex items-center justify-center text-white"
+  (click)="toggleSidebar()"
+>
+  <img
+    src="../../../assets/icons/icon-show-sidebar.svg"
+    alt="Icon of Hidden"
+    class="w-6 h-4"
+  />
+</button>

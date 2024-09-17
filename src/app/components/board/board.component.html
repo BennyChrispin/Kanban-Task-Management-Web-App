@@ -1,1 +1,13 @@
-<p>board works!</p>
+<div *ngIf="selectedBoard$ | async as selectedBoard; else noBoardSelected">
+  <div class="grid grid-cols-3">
+    <div *ngFor="let column of selectedBoard.columns">
+      <h3 class="font-semibold text-softGray text-base">
+        {{ column.name }} &nbsp;({{ column.tasks.length }})
+      </h3>
+      <app-task [tasks]="column.tasks"></app-task>
+    </div>
+  </div>
+</div>
+<ng-template #noBoardSelected>
+  <p class="text-gray-500">No board selected. Please select a board.</p>
+</ng-template>

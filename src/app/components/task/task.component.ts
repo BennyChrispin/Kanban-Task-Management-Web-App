@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrl: './task.component.css'
+  styleUrls: ['./task.component.css'],
 })
 export class TaskComponent {
+  @Input() tasks!: any[];
 
+  getCompletedSubtasksCount(subtasks: any[]): number {
+    return subtasks.filter((subtask) => subtask.isCompleted).length;
+  }
 }

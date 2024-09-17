@@ -1,1 +1,17 @@
-<p>task works!</p>
+<ul>
+  <li
+    *ngFor="let task of tasks"
+    class="mx-2 my-4 bg-white dark:bg-mediumGray p-6 rounded-lg shadow-md"
+  >
+    <p class="text-black dark:text-white font-semibold text-base">
+      {{ task.title }}
+    </p>
+    <p class="text-black dark:text-white font-semibold text-base">
+      {{ task.description }}
+    </p>
+    <p class="font-semibold text-softGray text-base mt-2">
+      {{ getCompletedSubtasksCount(task.subtasks) }} of
+      {{ task.subtasks.length }} subtasks
+    </p>
+  </li>
+</ul>

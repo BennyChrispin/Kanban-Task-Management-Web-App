@@ -10,7 +10,8 @@ import { TaskComponent } from './components/task/task.component';
 import { BoardComponent } from './components/board/board.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ModalComponent } from './shared/modal/modal.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { taskReducer } from './store/board.reducer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,9 +23,11 @@ import { ModalComponent } from './shared/modal/modal.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    StoreModule.forFeature('tasks', taskReducer),
   ],
   providers: [],
   bootstrap: [AppComponent],

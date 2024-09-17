@@ -1,1 +1,4 @@
-<app-header></app-header>
+<app-header
+  [board]="(boards$ | async) || []"
+  (selectBoard)="onBoardSelected($event)"
+></app-header>
