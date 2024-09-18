@@ -22,6 +22,7 @@ export class HeaderComponent implements OnChanges {
   @Input() selectedBoardName: string | null = null;
   @Output() selectBoard = new EventEmitter<number | null>();
 
+  // this for localStorage of themes (Dark Mode & Light Mode)
   ngOnInit(): void {
     this.isDarkMode = localStorage.getItem('theme') === 'dark';
     this.updateTheme();
