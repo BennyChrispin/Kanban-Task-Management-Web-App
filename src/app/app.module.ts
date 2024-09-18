@@ -11,7 +11,7 @@ import { BoardComponent } from './components/board/board.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ModalComponent } from './shared/modal/modal.component';
 import { HttpClientModule } from '@angular/common/http';
-import { taskReducer } from './store/board.reducer';
+import { boardReducer } from './store/board.reducer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +27,7 @@ import { taskReducer } from './store/board.reducer';
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    StoreModule.forFeature('tasks', taskReducer),
+    StoreModule.forFeature('boards', boardReducer),
   ],
   providers: [],
   bootstrap: [AppComponent],

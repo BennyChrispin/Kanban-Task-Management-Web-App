@@ -1,7 +1,8 @@
 <div class="flex min-h-screen">
+  <!-- Sidebar -->
   <div
-    class="flex flex-col min-h-screen bg-white dark:bg-mediumGray w-80 border-r border-lightBlue dark:border-lightGray"
-    *ngIf="isSidebarVisible"
+    class="flex flex-col bg-white dark:bg-mediumGray w-80 border-r border-lightBlue dark:border-lightGray fixed min-h-screen top-0 left-0"
+    [ngClass]="{ 'sidebar-hidden': !isSidebarVisible }"
   >
     <div class="pr-8 mt-10">
       <img
@@ -20,7 +21,13 @@
         <ng-container *ngIf="board && board.length > 0">
           <button
             *ngFor="let boardItem of board"
-            class="flex items-center space-x-4 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-6 text-softGray font-semibold text-lg hover:text-white"
+            [ngClass]="{
+              'bg-primary text-white rounded-r-full':
+                boardItem.id === selectedBoardId,
+              'hover:bg-primary hover:rounded-r-full':
+                boardItem.id !== selectedBoardId
+            }"
+            class="flex items-center space-x-4 px-8 duration-300 transition-all ease-in-out p-6 text-softGray hover:text-white font-semibold text-lg"
             (click)="onSelectBoard(boardItem)"
           >
             <svg
@@ -110,9 +117,14 @@
     </div>
   </div>
 
-  <div class="flex-1 flex flex-col">
+  <div class="flex-1 flex flex-col ml-80">
+    <!-- Top Navbar -->
     <div
-      class="bg-white dark:bg-mediumGray border-b border-lightBlue dark:border-lightGray py-6 px-6"
+      [ngClass]="{
+        'content-with-sidebar': isSidebarVisible,
+        'content-without-sidebar': !isSidebarVisible
+      }"
+      class="bg-white dark:bg-mediumGray border-b border-lightBlue dark:border-lightGray py-6 px-6 fixed top-0 left-0 right-0 z-10"
     >
       <div class="flex items-center justify-between">
         <h2 class="text-black font-bold text-lg dark:text-white">
@@ -138,13 +150,12 @@
       </div>
     </div>
 
-    <!-- Middle Content -->
-    <div class="p-6 flex-1">
+    <!-- Main Content -->
+    <div class="flex-1 overflow-y-auto mt-24 p-6">
       <app-board [selectedBoardId]="selectedBoardId"></app-board>
     </div>
   </div>
 </div>
-
 <button
   *ngIf="!isSidebarVisible"
   class="absolute bottom-14 p-4 rounded-r-full px-6 bg-primary flex items-center justify-center text-white"
@@ -152,7 +163,7 @@
 >
   <img
     src="../../../assets/icons/icon-show-sidebar.svg"
-    alt="Icon of Hidden"
+    alt="Icon of Show Sidebar"
     class="w-6 h-4"
   />
 </button>

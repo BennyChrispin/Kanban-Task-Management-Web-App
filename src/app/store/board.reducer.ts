@@ -1,17 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadBoards, addColumn } from './board.action';
-import { initialState } from './board.state';
+import { adapter, initialState } from './board.state';
+import { loadBoards } from './board.action';
 
-export const taskReducer = createReducer(
+export const boardReducer = createReducer(
   initialState,
-  on(loadBoards, (state, { boards }) => ({ ...state, boards })),
-  on(addColumn, (state, { boardId, column }) => {
-    const updatedBoards = state.boards.map((board) => {
-      if (board.id === boardId) {
-        return { ...board, columns: [...board.columns, column] };
-      }
-      return board;
-    });
-    return { ...state, boards: updatedBoards };
+  on(loadBoards, (state, { boards }) => {
+    const validBoards = boards.map((board: any, index: number) => ({
+      ...board,
+      id: board.id || index,
+    }));
+    return adapter.setAll(validBoards, state);
   })
 );

@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectBoardById } from '../../store/board.selectors';
@@ -15,16 +21,10 @@ export class BoardComponent implements OnInit, OnChanges {
 
   constructor(private store: Store<BoardState>) {}
 
-  ngOnInit() {
-    if (this.selectedBoardId !== null) {
-      this.selectedBoard$ = this.store.select(
-        selectBoardById(this.selectedBoardId)
-      );
-    }
-  }
+  ngOnInit(): void {}
 
-  ngOnChanges(): void {
-    if (this.selectedBoardId !== null) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedBoardId'] && this.selectedBoardId !== null) {
       this.selectedBoard$ = this.store.select(
         selectBoardById(this.selectedBoardId)
       );

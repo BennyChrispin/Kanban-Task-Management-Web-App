@@ -15,6 +15,15 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isDarkMode = localStorage.getItem('theme') === 'dark';
     this.updateTheme();
+
+    // Set default board selection
+    if (this.board.length > 0) {
+      const defaultBoard = this.board.find((b) => b.name === 'Platform Launch');
+      if (defaultBoard) {
+        this.selectedBoardId = defaultBoard.id;
+        this.selectBoard.emit(this.selectedBoardId);
+      }
+    }
   }
 
   toggleDarkMode(): void {
@@ -35,14 +44,15 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  onSelectBoard(boardItem: any) {
-    console.log('Selected Board Item:', boardItem);
+  onSelectBoard(boardItem: any): void {
     if (boardItem && boardItem.name) {
       this.selectedBoardId = boardItem.id ?? null;
       this.selectBoard.emit(this.selectedBoardId);
-      console.log('Selected Board ID:', this.selectedBoardId);
-    } else {
-      console.log('Board is not selected or available.');
+      // i wanna to console.log this
+      console.log(
+        'Selected Board ID in HeaderComponent:',
+        this.selectedBoardId
+      );
     }
   }
 }

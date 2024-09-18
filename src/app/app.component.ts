@@ -3,7 +3,7 @@ import { TaskService } from './core/services/task.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BoardState } from './store/board.state';
-import { selectBoards } from './store/board.selectors';
+import { selectAllBoards } from './store/board.selectors';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { selectBoards } from './store/board.selectors';
 })
 export class AppComponent implements OnInit {
   selectedBoardId: number | null = null;
-  boards$!: Observable<any>;
+  boards$!: Observable<any[]>;
 
   constructor(
     private taskService: TaskService,
@@ -21,7 +21,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskService.loadBoardData();
-    this.boards$ = this.store.select(selectBoards);
+    this.boards$ = this.store.select(selectAllBoards);
+    this.boards$.subscribe((boards) => {
+      const defaultBoard = boards.find(
+        (board) => board.name === 'Platform Launch'
+      );
+      if (defaultBoard) {
+        this.selectedBoardId = defaultBoard.id;
+      }
+    });
   }
 
   onBoardSelected(boardId: number | null) {

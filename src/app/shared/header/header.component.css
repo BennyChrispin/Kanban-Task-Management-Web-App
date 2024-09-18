@@ -1,0 +1,31 @@
+/* Sidebar */
+.sidebar {
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%);
+}
+
+/* Content area */
+.content-with-sidebar {
+  margin-left: 20rem;
+}
+
+.content-without-sidebar {
+  margin-left: 0;
+}
+
+/* Transition for content adjustment */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.ml-80 {
+  margin-left: 20rem;
+}

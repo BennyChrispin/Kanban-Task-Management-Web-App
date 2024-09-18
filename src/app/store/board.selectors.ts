@@ -1,15 +1,12 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { BoardState } from './board.state';
+import { BoardState, adapter } from './board.state';
 
-export const selectTaskState = createFeatureSelector<BoardState>('tasks');
+export const selectBoardState = createFeatureSelector<BoardState>('boards');
 
-export const selectBoards = createSelector(
-  selectTaskState,
-  (state: BoardState) => {
-    return state.boards;
-  }
-);
+export const {
+  selectAll: selectAllBoards,
+  selectEntities: selectBoardEntities,
+} = adapter.getSelectors(selectBoardState);
+
 export const selectBoardById = (boardId: number) =>
-  createSelector(selectBoards, (boards) =>
-    boards.find((board) => board.id === boardId)
-  );
+  createSelector(selectBoardEntities, (entities) => entities[boardId]);
