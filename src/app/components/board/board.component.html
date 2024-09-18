@@ -1,6 +1,13 @@
 <div *ngIf="selectedBoard$ | async as selectedBoard; else noBoardSelected">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    <div *ngFor="let column of selectedBoard.columns">
+    <div
+      *ngFor="let column of selectedBoard.columns"
+      [cdkDropListConnectedTo]="getConnectedColumns(selectedBoard)"
+      cdkDropList
+      [cdkDropListData]="column.tasks"
+      (cdkDropListDropped)="drop($event, column.name)"
+      [id]="'cdk-drop-list-' + column.name"
+    >
       <h3 class="font-semibold text-softGray text-base flex items-center gap-3">
         <div
           [ngStyle]="{ 'background-color': getColumnColor(column.name) }"
@@ -8,8 +15,12 @@
         ></div>
         {{ column.name }} &nbsp;({{ column.tasks.length }})
       </h3>
-      <app-task [tasks]="column.tasks"></app-task>
+
+      <div *ngFor="let task of column.tasks" cdkDrag>
+        <app-task [tasks]="[task]"></app-task>
+      </div>
     </div>
+
     <div
       class="flex flex-col items-center justify-center bg-darkBlue dark:bg-darkTrans rounded-md mt-10"
     >
@@ -36,14 +47,5 @@
     <p class="text-softGray font-semibold text-base">
       This Board is empty. Create a new column to get started.
     </p>
-    <button
-      class="py-3 bg-primary text-white font-medium text-base rounded-full px-8 flex items-center justify-center gap-2 mt-4"
-    >
-      <img
-        src="../../../assets/icons/icon-add-task-mobile.svg"
-        alt="Add Task"
-      />
-      Add New Task
-    </button>
   </div>
 </ng-template>
