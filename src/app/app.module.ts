@@ -13,6 +13,7 @@ import { ModalComponent } from './shared/modal/modal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { boardReducer } from './store/board.reducer';
 import { FormComponent } from './components/form/form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { FormComponent } from './components/form/form.component';
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forFeature('boards', boardReducer),
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

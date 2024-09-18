@@ -15,6 +15,7 @@ import {
 export class HeaderComponent implements OnChanges {
   isDarkMode = false;
   isSidebarVisible: boolean = true;
+  isModalVisible: boolean = false;
   @Input() board: any[] = [];
   @Input() selectedBoardId: number | null = null;
   @Input() selectedBoardName: string | null = null;
@@ -37,7 +38,7 @@ export class HeaderComponent implements OnChanges {
     this.updateTheme();
   }
 
-  toggleSidebar() {
+  toggleSidebar(): void {
     this.isSidebarVisible = !this.isSidebarVisible;
   }
 
@@ -59,5 +60,13 @@ export class HeaderComponent implements OnChanges {
         this.selectedBoardId
       );
     }
+  }
+
+  openModal(): void {
+    this.isModalVisible = true;
+  }
+
+  closeModal(): void {
+    this.isModalVisible = false;
   }
 }

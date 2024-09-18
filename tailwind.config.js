@@ -15,6 +15,7 @@ module.exports = {
         softGray: "#828FA3",
         lightBlue: "#E4EBFA",
         darkBlue: "#EBF1FB",
+        placeholder: "#BFBFC4",
         paleBlue: "#F4F7FD",
         white: "#FFFFFF",
         red: "#EA5555",
@@ -23,6 +24,7 @@ module.exports = {
         cyan: "#49C4E5",
         violater: "#8471F2",
         green: "#67E2AE",
+        borderForm: "#E0E3E8",
       },
       fontFamily: {
         jakarta: ["Plus Jakarta Sans", "sans-serif"],
