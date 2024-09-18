@@ -12,6 +12,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { ModalComponent } from './shared/modal/modal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { boardReducer } from './store/board.reducer';
+import { FormComponent } from './components/form/form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +20,7 @@ import { boardReducer } from './store/board.reducer';
     BoardComponent,
     HeaderComponent,
     ModalComponent,
+    FormComponent,
   ],
   imports: [
     BrowserModule,
