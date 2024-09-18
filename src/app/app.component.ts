@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BoardState } from './store/board.state';
 import { selectAllBoards } from './store/board.selectors';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -21,15 +22,16 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskService.loadBoardData();
-    this.boards$ = this.store.select(selectAllBoards);
-    this.boards$.subscribe((boards) => {
-      const defaultBoard = boards.find(
-        (board) => board.name === 'Platform Launch'
-      );
-      if (defaultBoard) {
-        this.selectedBoardId = defaultBoard.id;
-      }
-    });
+    this.boards$ = this.store.select(selectAllBoards).pipe(
+      tap((boards) => {
+        const defaultBoard = boards.find(
+          (board) => board.name === 'Platform Launch'
+        );
+        if (defaultBoard) {
+          this.selectedBoardId = defaultBoard.id;
+        }
+      })
+    );
   }
 
   onBoardSelected(boardId: number | null) {

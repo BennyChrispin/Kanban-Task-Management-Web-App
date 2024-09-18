@@ -1,27 +1,30 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnChanges {
   isDarkMode = false;
   isSidebarVisible: boolean = true;
   @Input() board: any[] = [];
+  @Input() selectedBoardId: number | null = null;
   @Output() selectBoard = new EventEmitter<number | null>();
-  selectedBoardId: number | null = null;
 
-  ngOnInit(): void {
-    this.isDarkMode = localStorage.getItem('theme') === 'dark';
-    this.updateTheme();
-
-    // Set default board selection
-    if (this.board.length > 0) {
-      const defaultBoard = this.board.find((b) => b.name === 'Platform Launch');
-      if (defaultBoard) {
-        this.selectedBoardId = defaultBoard.id;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['board'] && this.board.length > 0) {
+      if (!this.selectedBoardId) {
+        this.selectedBoardId = this.board[0].id;
         this.selectBoard.emit(this.selectedBoardId);
+        console.log('Selected Board ID on changes:', this.selectedBoardId);
       }
     }
   }
@@ -48,7 +51,6 @@ export class HeaderComponent implements OnInit {
     if (boardItem && boardItem.name) {
       this.selectedBoardId = boardItem.id ?? null;
       this.selectBoard.emit(this.selectedBoardId);
-      // i wanna to console.log this
       console.log(
         'Selected Board ID in HeaderComponent:',
         this.selectedBoardId

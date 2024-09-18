@@ -1,10 +1,29 @@
 <div *ngIf="selectedBoard$ | async as selectedBoard; else noBoardSelected">
-  <div class="grid grid-cols-3">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     <div *ngFor="let column of selectedBoard.columns">
       <h3 class="font-semibold text-softGray text-base">
         {{ column.name }} &nbsp;({{ column.tasks.length }})
       </h3>
       <app-task [tasks]="column.tasks"></app-task>
+    </div>
+    <div
+      class="flex flex-col items-center justify-center bg-darkBlue dark:bg-darkTrans rounded-md mt-10"
+    >
+      <button
+        class="text-softGray font-semibold text-base flex items-center justify-center gap-2"
+      >
+        <svg
+          width="12"
+          height="12"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+        >
+          <path
+            d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
+          />
+        </svg>
+        New Column
+      </button>
     </div>
   </div>
 </div>
