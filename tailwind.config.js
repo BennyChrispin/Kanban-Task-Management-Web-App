@@ -20,6 +20,9 @@ module.exports = {
         red: "#EA5555",
         lightRed: "#FF9898",
         skyRed: "#EFEFF9",
+        cyan: "#49C4E5",
+        violater: "#8471F2",
+        green: "#67E2AE",
       },
       fontFamily: {
         jakarta: ["Plus Jakarta Sans", "sans-serif"],

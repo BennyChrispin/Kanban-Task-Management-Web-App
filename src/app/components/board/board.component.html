@@ -1,7 +1,11 @@
 <div *ngIf="selectedBoard$ | async as selectedBoard; else noBoardSelected">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     <div *ngFor="let column of selectedBoard.columns">
-      <h3 class="font-semibold text-softGray text-base">
+      <h3 class="font-semibold text-softGray text-base flex items-center gap-3">
+        <div
+          [ngStyle]="{ 'background-color': getColumnColor(column.name) }"
+          class="p-2 rounded-full w-4 h-4"
+        ></div>
         {{ column.name }} &nbsp;({{ column.tasks.length }})
       </h3>
       <app-task [tasks]="column.tasks"></app-task>
@@ -28,5 +32,18 @@
   </div>
 </div>
 <ng-template #noBoardSelected>
-  <p class="text-gray-500">No board selected. Please select a board.</p>
+  <div class="flex items-center justify-center">
+    <p class="text-softGray font-semibold text-base">
+      This Board is empty. Create a new column to get started.
+    </p>
+    <button
+      class="py-3 bg-primary text-white font-medium text-base rounded-full px-8 flex items-center justify-center gap-2 mt-4"
+    >
+      <img
+        src="../../../assets/icons/icon-add-task-mobile.svg"
+        alt="Add Task"
+      />
+      Add New Task
+    </button>
+  </div>
 </ng-template>
