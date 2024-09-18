@@ -17,12 +17,14 @@ export class HeaderComponent implements OnChanges {
   isSidebarVisible: boolean = true;
   @Input() board: any[] = [];
   @Input() selectedBoardId: number | null = null;
+  @Input() selectedBoardName: string | null = null;
   @Output() selectBoard = new EventEmitter<number | null>();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['board'] && this.board.length > 0) {
       if (!this.selectedBoardId) {
         this.selectedBoardId = this.board[0].id;
+        this.selectedBoardName = this.board[0].name;
         this.selectBoard.emit(this.selectedBoardId);
         console.log('Selected Board ID on changes:', this.selectedBoardId);
       }
@@ -50,6 +52,7 @@ export class HeaderComponent implements OnChanges {
   onSelectBoard(boardItem: any): void {
     if (boardItem && boardItem.name) {
       this.selectedBoardId = boardItem.id ?? null;
+      this.selectedBoardName = boardItem.name;
       this.selectBoard.emit(this.selectedBoardId);
       console.log(
         'Selected Board ID in HeaderComponent:',
