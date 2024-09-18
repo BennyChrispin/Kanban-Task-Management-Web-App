@@ -24,10 +24,10 @@
             [ngClass]="{
               'bg-primary text-white rounded-r-full':
                 boardItem.id === selectedBoardId,
-              'hover:bg-primary hover:rounded-r-full':
+              'hover:bg-[#EFEFF9] hover:text-primary hover:rounded-r-full':
                 boardItem.id !== selectedBoardId
             }"
-            class="flex items-center space-x-4 px-8 duration-300 transition-all ease-in-out p-4 text-softGray hover:text-white font-semibold text-lg"
+            class="flex items-center space-x-4 px-8 duration-300 transition-all ease-in-out p-4 text-softGray font-semibold text-lg"
             (click)="onSelectBoard(boardItem)"
           >
             <svg

@@ -17,18 +17,23 @@ export class FormComponent {
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: [''],
-      subtasks: this.fb.array([]),
+      subtasks: this.fb.array([
+        this.fb.control('Fixed Column 1', Validators.required),
+        this.fb.control('Fixed Column 2', Validators.required),
+      ]),
       status: ['', Validators.required],
     });
     this.subtasks = this.form.get('subtasks') as FormArray;
   }
 
   addSubtask() {
-    this.subtasks.push(this.fb.control(''));
+    this.subtasks.push(this.fb.control('', Validators.required));
   }
 
   removeSubtask(index: number) {
-    this.subtasks.removeAt(index);
+    if (index >= 2) {
+      this.subtasks.removeAt(index);
+    }
   }
 
   cancel() {

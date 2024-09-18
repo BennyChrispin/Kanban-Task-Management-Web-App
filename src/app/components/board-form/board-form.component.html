@@ -2,7 +2,7 @@
   class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
 >
   <div
-    class="bg-white dark:bg-mediumGray rounded-xl shadow-lg w-full max-w-lg p-8"
+    class="bg-white dark:bg-mediumGray rounded-xl shadow-lg w-full max-w-lg p-8 mx-auto"
   >
     <div class="flex justify-between items-center">
       <h2 class="text-xl font-semibold text-black dark:text-white">
@@ -58,13 +58,16 @@
           >
             <input
               [formControlName]="i"
-              placeholder="eg: Todo"
+              [placeholder]="i ? 'e.g., Doing ' : 'e.g., ToDo'"
+              [disabled]="i < 2"
               class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
             />
+
             <button
               type="button"
+              *ngIf="i >= 2"
               (click)="removeColumns(i)"
-              class="text-softGray font-extrabold hover:text-black duration-300 transition-all ease-in"
+              class="text-softGray font-extrabold hover:text-red duration-300 transition-all ease-in"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -82,6 +85,7 @@
               </svg>
             </button>
           </div>
+
           <button
             type="button"
             (click)="addColumns()"
