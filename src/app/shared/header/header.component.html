@@ -45,6 +45,7 @@
         </ng-container>
 
         <button
+          (click)="openForm()"
           class="flex items-center space-x-4 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-4 text-primary font-semibold text-lg hover:text-white"
         >
           <svg
@@ -121,7 +122,7 @@
     [ngClass]="{
       'ml-80': isSidebarVisible,
       'ml-0': !isSidebarVisible,
-      'blur-sm': isModalVisible
+      'blur-sm': isModalVisible || isModalForm,
     }"
   >
     <!-- Top Navbar -->
@@ -179,3 +180,4 @@
 
 <!-- Modal of Form -->
 <app-form *ngIf="isModalVisible" (closeForm)="closeModal()"></app-form>
+<app-board-form *ngIf="isModalForm" (closeForm)="closeForm()"></app-board-form>

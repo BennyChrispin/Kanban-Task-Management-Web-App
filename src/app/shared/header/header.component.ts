@@ -16,6 +16,7 @@ export class HeaderComponent implements OnChanges {
   isDarkMode = false;
   isSidebarVisible: boolean = true;
   isModalVisible: boolean = false;
+  isModalForm: boolean = false;
   @Input() board: any[] = [];
   @Input() selectedBoardId: number | null = null;
   @Input() selectedBoardName: string | null = null;
@@ -65,8 +66,14 @@ export class HeaderComponent implements OnChanges {
   openModal(): void {
     this.isModalVisible = true;
   }
+  openForm(): void {
+    this.isModalForm = true;
+  }
 
   closeModal(): void {
     this.isModalVisible = false;
+  }
+  closeForm(): void {
+    this.isModalForm = false;
   }
 }

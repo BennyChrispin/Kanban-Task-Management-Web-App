@@ -6,7 +6,7 @@
   >
     <div class="flex justify-between items-center">
       <h2 class="text-xl font-semibold text-black dark:text-white">
-        Add New Task
+        Add New Board
       </h2>
       <button
         (click)="cancel()"
@@ -33,53 +33,37 @@
       <form [formGroup]="form">
         <div class="mb-4">
           <label
-            for="title"
+            for="name"
             class="block text-base font-medium text-softGray dark:text-white"
-            >Title</label
+            >Name</label
           >
           <input
-            id="title"
-            formControlName="title"
+            id="name"
+            formControlName="name"
             type="text"
-            placeholder="eg: Take coffee break"
+            placeholder="eg. Web Design"
             class="mt-1 p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
           />
         </div>
 
         <div class="mb-4">
           <label
-            for="description"
             class="block text-base font-medium text-softGray dark:text-white"
-            >Description</label
-          >
-          <textarea
-            id="description"
-            formControlName="description"
-            placeholder="eg:It’s always good to take a break. This 15 minute break will 
-            recharge the batteries a little."
-            rows="5"
-            class="mt-1 p-3 bg-transparent dark:border-[#414552] block w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
-          ></textarea>
-        </div>
-
-        <div class="mb-4">
-          <label
-            class="block text-base font-medium text-softGray dark:text-white"
-            >Subtasks</label
+            >Columns</label
           >
 
           <div
-            *ngFor="let subtask of subtasks.controls; let i = index"
+            *ngFor="let column of columns.controls; let i = index"
             class="flex items-center space-x-2 mb-3 mt-4"
           >
             <input
               [formControlName]="i"
-              placeholder="eg: coffee break"
+              placeholder="eg: Todo"
               class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
             />
             <button
               type="button"
-              (click)="removeSubtask(i)"
+              (click)="removeColumns(i)"
               class="text-softGray font-extrabold hover:text-black duration-300 transition-all ease-in"
             >
               <svg
@@ -100,7 +84,7 @@
           </div>
           <button
             type="button"
-            (click)="addSubtask()"
+            (click)="addColumns()"
             class="mt-4 mb-4 bg-skyRed dark:bg-white px-4 py-3 font-semibold rounded-full shadow w-full text-base text-primary flex items-center justify-center gap-2"
           >
             <svg
@@ -113,26 +97,8 @@
                 d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
               />
             </svg>
-            Add New Subtask
+            Add New Column
           </button>
-        </div>
-
-        <!-- Status -->
-        <div class="mb-4">
-          <label
-            for="status"
-            class="block text-base font-medium text-softGray dark:text-white"
-            >Status</label
-          >
-          <select
-            id="status"
-            formControlName="status"
-            class="mt-1 bg-transparent p-3 block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight"
-          >
-            <option *ngFor="let status of statusOptions" [value]="status">
-              {{ status }}
-            </option>
-          </select>
         </div>
       </form>
     </div>
@@ -141,9 +107,9 @@
       <button
         type="button"
         class="bg-primary text-white px-4 py-3 rounded-full shadow w-full"
-        (click)="saveChanges()"
+        (click)="createNew()"
       >
-        Save Changes
+        Create New Board
       </button>
     </div>
   </div>

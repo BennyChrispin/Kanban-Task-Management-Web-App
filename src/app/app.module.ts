@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { boardReducer } from './store/board.reducer';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BoardFormComponent } from './components/board-form/board-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     ModalComponent,
     FormComponent,
+    BoardFormComponent,
   ],
   imports: [
     BrowserModule,
