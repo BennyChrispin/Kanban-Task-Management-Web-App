@@ -22,6 +22,11 @@ export class HeaderComponent implements OnChanges {
   @Input() selectedBoardName: string | null = null;
   @Output() selectBoard = new EventEmitter<number | null>();
 
+  ngOnInit(): void {
+    this.isDarkMode = localStorage.getItem('theme') === 'dark';
+    this.updateTheme();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['board'] && this.board.length > 0) {
       if (!this.selectedBoardId) {
