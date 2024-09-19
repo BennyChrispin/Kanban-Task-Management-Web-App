@@ -42,7 +42,7 @@
             formControlName="name"
             type="text"
             placeholder="e.g., Web Design"
-            class="mt-1 p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
+            class="mt-1 dark:text-white p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
           />
           <div
             *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
@@ -66,7 +66,7 @@
               [formControlName]="i"
               [placeholder]="i ? 'e.g., Doing' : 'e.g., ToDo'"
               [disabled]="i < 2"
-              class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
+              class="p-3 dark:text-white block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
             />
             <div
               *ngIf="columns.at(i)?.invalid && columns.at(i)?.touched"

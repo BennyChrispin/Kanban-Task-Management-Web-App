@@ -42,7 +42,7 @@
             formControlName="title"
             type="text"
             placeholder="eg: Take coffee break"
-            class="mt-1 p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
+            class="mt-1 p-3 dark:text-white bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
           />
           <div
             *ngIf="form.get('title')?.invalid && form.get('title')?.touched"
@@ -64,7 +64,7 @@
             placeholder="eg:It’s always good to take a break. This 15 minute break will 
             recharge the batteries a little."
             rows="5"
-            class="mt-1 p-3 bg-transparent dark:border-[#414552] block w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
+            class="mt-1 dark:text-white p-3 bg-transparent dark:border-[#414552] block w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
           ></textarea>
           <div
             *ngIf="form.get('status')?.invalid && form.get('status')?.touched"
@@ -90,7 +90,7 @@
                 i ? 'e.g., Drink Coffee & Smile ' : 'e.g., Make Coffee'
               "
               [disabled]="i < 2"
-              class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
+              class="p-3 dark:text-white block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
             />
             <div
               *ngIf="subtasks.at(i)?.invalid && subtasks.at(i)?.touched"
@@ -148,7 +148,7 @@
           <select
             id="status"
             formControlName="status"
-            class="mt-1 bg-transparent p-3 block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight"
+            class="mt-1 dark:text-white bg-transparent p-3 block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight"
           >
             <option *ngFor="let status of statusOptions" [value]="status">
               {{ status }}
