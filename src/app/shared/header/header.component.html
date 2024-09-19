@@ -76,7 +76,7 @@
       </div>
     </div>
 
-    <div class="mt-auto mb-10">
+    <div class="mt-auto mb-14">
       <div
         class="bg-lightBlue dark:bg-darkGray rounded-lg p-5 flex items-center justify-between px-10 mx-8"
       >
@@ -105,7 +105,7 @@
         />
       </div>
       <button
-        class="mt-8 flex items-center space-x-4 text-softGray font-semibold hover:bg-skyRed duration-300 transition-all ease-in-out hover:text-primary p-4 px-10 rounded-r-full"
+        class="mt-4 flex items-center space-x-4 text-softGray font-semibold hover:bg-skyRed duration-300 transition-all ease-in-out hover:text-primary p-4 px-10 rounded-r-full"
         (click)="toggleSidebar()"
       >
         <img
@@ -129,14 +129,33 @@
     <div
       [ngClass]="{
         'content-with-sidebar': isSidebarVisible,
-        'content-without-sidebar': !isSidebarVisible
+        'content-without-sidebar': !isSidebarVisible,
       }"
       class="bg-white dark:bg-mediumGray border-b border-lightBlue dark:border-lightGray py-6 px-6 fixed top-0 left-0 right-0 z-10"
     >
-      <div class="flex items-center justify-between">
-        <h2 class="text-black font-bold text-lg dark:text-white">
-          {{ selectedBoardName || "Platform Launch" }}
-        </h2>
+      <div class="flex items-center justify-between w-full">
+        <!-- Conditionally render logo and divider based on isSidebarVisible -->
+        <div class="flex items-center space-x-10">
+          <div *ngIf="!isSidebarVisible" class="flex items-center space-x-10">
+            <img
+              [src]="
+                isDarkMode
+                  ? '../../../assets/icons/logo-light.svg'
+                  : '../../../assets/icons/logo-dark.svg'
+              "
+              alt="Logo"
+              class="w-1/7 h-7"
+            />
+            <div
+              class="w-[2px] h-full left-[170px] absolute bg-lightBlue dark:bg-lightGray"
+            ></div>
+          </div>
+
+          <h2 class="text-black font-bold text-lg dark:text-white">
+            {{ selectedBoardName || "Platform Launch" }}
+          </h2>
+        </div>
+
         <div class="flex items-center space-x-6">
           <button
             (click)="openModal()"
