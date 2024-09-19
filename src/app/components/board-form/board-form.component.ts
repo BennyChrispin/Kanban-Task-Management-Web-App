@@ -40,6 +40,8 @@ export class BoardFormComponent {
     if (this.form.valid) {
       console.log('Form Value:', this.form.value);
       this.closeForm.emit();
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 }

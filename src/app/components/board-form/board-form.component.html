@@ -31,7 +31,7 @@
 
     <div class="mt-4">
       <form [formGroup]="form">
-        <div class="mb-4">
+        <div class="mb-4 relative">
           <label
             for="name"
             class="block text-base font-medium text-softGray dark:text-white"
@@ -41,9 +41,15 @@
             id="name"
             formControlName="name"
             type="text"
-            placeholder="eg. Web Design"
+            placeholder="e.g., Web Design"
             class="mt-1 p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
           />
+          <div
+            *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+            class="text-red text-sm mt-1 absolute bottom-4 right-4"
+          >
+            Name is required
+          </div>
         </div>
 
         <div class="mb-4">
@@ -54,15 +60,20 @@
 
           <div
             *ngFor="let column of columns.controls; let i = index"
-            class="flex items-center space-x-2 mb-3 mt-4"
+            class="flex items-center space-x-2 mb-3 mt-4 relative"
           >
             <input
               [formControlName]="i"
-              [placeholder]="i ? 'e.g., Doing ' : 'e.g., ToDo'"
+              [placeholder]="i ? 'e.g., Doing' : 'e.g., ToDo'"
               [disabled]="i < 2"
               class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
             />
-
+            <div
+              *ngIf="columns.at(i)?.invalid && columns.at(i)?.touched"
+              class="text-red text-sm mt-1 absolute right-12"
+            >
+              can't be empty
+            </div>
             <button
               type="button"
               *ngIf="i >= 2"
