@@ -1,10 +1,11 @@
-<ul>
-  <li
+<div class="space-y-3">
+  <div
     *ngFor="let task of tasks"
     class="my-3 bg-white dark:bg-mediumGray p-4 rounded-lg shadow-md"
   >
     <button
       class="text-start text-black dark:text-white font-semibold dark:hover:text-primary text-base hover:text-primary duration-300 transition-all ease-in"
+      (click)="openModal(task)"
     >
       {{ task.title }}
     </button>
@@ -13,5 +14,11 @@
       {{ getCompletedSubtasksCount(task.subtasks) }} of
       {{ task.subtasks.length }} subtasks
     </p>
-  </li>
-</ul>
+  </div>
+</div>
+
+<!-- Modal Component -->
+<app-task-display
+  [tasks]="selectedTask ? [selectedTask] : []"
+  [isVisible]="isModalVisible"
+></app-task-display>

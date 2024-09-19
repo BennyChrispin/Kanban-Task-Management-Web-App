@@ -1,0 +1,80 @@
+<div
+  *ngIf="isVisible"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50"
+>
+  <div
+    class="bg-white dark:bg-mediumGray p-8 rounded-lg shadow-lg max-w-lg w-full"
+  >
+    <div *ngFor="let task of tasks">
+      <button
+        (click)="cancel()"
+        class="text-lightGray dark:text-borderForm dark:hover:border-black dark:border-white font-bold border border-borderForm hover:border-softGray duration-300 transition-all ease-in rounded-full p-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+
+      <div class="flex items-center justify-between mt-4 w-full">
+        <h2 class="text-lg font-bold text-black dark:text-white w-4/5">
+          {{ task.title }}
+        </h2>
+        <button
+          class="text-lightGray dark:text-borderForm dark:hover:border-black dark:border-white font-bold"
+        >
+          <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
+            <g fill="currentColor" fill-rule="evenodd">
+              <circle cx="2.308" cy="2.308" r="2.308" />
+              <circle cx="2.308" cy="10" r="2.308" />
+              <circle cx="2.308" cy="17.692" r="2.308" />
+            </g>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mt-4">
+        <p class="text-softGray text-base font-normal">
+          {{ task.description }}
+        </p>
+        <div class="mt-4">
+          <p class="font-semibold text-softGray dark:text-white text-base mt-4">
+            {{ getCompletedSubtasksCount(task.subtasks) }} of
+            {{ task.subtasks.length }} subtasks
+          </p>
+          <div *ngFor="let subtask of task.subtasks" class="mt-4">
+            <div
+              class="flex items-center space-x-4 rounded-lg p-4 bg-paleBlue dark:bg-darkGray my-4 hover:bg-skyRed duration-300 transition-all ease-out cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                [checked]="subtask.isCompleted"
+                class="custom-checkbox h-6 w-6"
+              />
+
+              <span
+                [ngClass]="{
+                  'line-through text-softGray': subtask.isCompleted,
+                  'text-black dark:text-white': !subtask.isCompleted
+                }"
+                class="text-base font-semibold"
+              >
+                {{ subtask.title }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

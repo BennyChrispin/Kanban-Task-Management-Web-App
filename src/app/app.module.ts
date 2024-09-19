@@ -16,6 +16,7 @@ import { boardReducer } from './store/board.reducer';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BoardFormComponent } from './components/board-form/board-form.component';
+import { TaskDisplayComponent } from './components/task-display/task-display.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { BoardFormComponent } from './components/board-form/board-form.component
     ModalComponent,
     FormComponent,
     BoardFormComponent,
+    TaskDisplayComponent,
   ],
   imports: [
     BrowserModule,
