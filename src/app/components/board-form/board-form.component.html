@@ -42,7 +42,7 @@
             formControlName="name"
             type="text"
             placeholder="e.g., Web Design"
-            class="mt-1 dark:text-white p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
+            class="mt-1 p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
           />
           <div
             *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
@@ -60,25 +60,23 @@
 
           <div
             *ngFor="let column of columns.controls; let i = index"
-            class="flex items-center space-x-2 mb-3 mt-4 relative"
+            class="flex items-center space-x-2 mb-3 mt-4"
           >
             <input
               [formControlName]="i"
-              [placeholder]="i ? 'e.g., Doing' : 'e.g., ToDo'"
-              [disabled]="i < 2"
-              class="p-3 dark:text-white block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
+              [placeholder]="i === 0 ? 'e.g., ToDo' : 'e.g., Doing'"
+              class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
             />
             <div
-              *ngIf="columns.at(i)?.invalid && columns.at(i)?.touched"
-              class="text-red text-sm mt-1 absolute right-12"
+              *ngIf="column.get('name')?.invalid && column.get('name')?.touched"
+              class="text-red text-sm mt-1"
             >
               can't be empty
             </div>
-
             <button
               type="button"
               *ngIf="i >= 2"
-              (click)="removeColumns(i)"
+              (click)="removeColumn(i)"
               class="text-softGray font-extrabold hover:text-red duration-300 transition-all ease-in"
             >
               <svg
@@ -100,7 +98,7 @@
 
           <button
             type="button"
-            (click)="addColumns()"
+            (click)="addColumn()"
             class="mt-4 mb-4 bg-skyRed dark:bg-white px-4 py-3 font-semibold rounded-full shadow w-full text-base text-primary flex items-center justify-center gap-2"
           >
             <svg

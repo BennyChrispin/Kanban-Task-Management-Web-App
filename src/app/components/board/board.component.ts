@@ -40,9 +40,13 @@ export class BoardComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedBoardId'] && this.selectedBoardId !== null) {
+      console.log('selectedBoardId has changed:', this.selectedBoardId);
       this.selectedBoard$ = this.store.select(
         selectBoardById(this.selectedBoardId)
       );
+      this.selectedBoard$.subscribe((board) => {
+        console.log('Selected Board:', board);
+      });
     }
   }
 

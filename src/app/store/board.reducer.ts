@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { adapter, initialState } from './board.state';
-import { loadBoards } from './board.action';
+import { loadBoards, addBoard } from './board.action';
 
 export const boardReducer = createReducer(
   initialState,
@@ -10,5 +10,8 @@ export const boardReducer = createReducer(
       id: board.id || index,
     }));
     return adapter.setAll(validBoards, state);
+  }),
+  on(addBoard, (state, { board }) => {
+    return adapter.addOne(board, state);
   })
 );

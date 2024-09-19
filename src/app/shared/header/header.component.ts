@@ -62,10 +62,7 @@ export class HeaderComponent implements OnChanges {
       this.selectedBoardId = boardItem.id ?? null;
       this.selectedBoardName = boardItem.name;
       this.selectBoard.emit(this.selectedBoardId);
-      console.log(
-        'Selected Board ID in HeaderComponent:',
-        this.selectedBoardId
-      );
+      console.log('Selected Board ID:', this.selectedBoardId);
     }
   }
 
