@@ -37,6 +37,12 @@ export class BoardFormComponent {
   }
 
   createNew() {
+    this.columns.controls.forEach((control) => {
+      if (!control.value.trim()) {
+        control.setErrors({ required: true });
+      }
+    });
+
     if (this.form.valid) {
       console.log('Form Value:', this.form.value);
       this.closeForm.emit();

@@ -18,14 +18,13 @@ export class FormComponent {
       title: ['', Validators.required],
       description: [''],
       subtasks: this.fb.array([
-        this.fb.control('Fixed Column 1', Validators.required),
-        this.fb.control('Fixed Column 2', Validators.required),
+        this.fb.control('', Validators.required),
+        this.fb.control('', Validators.required),
       ]),
       status: ['', Validators.required],
     });
     this.subtasks = this.form.get('subtasks') as FormArray;
   }
-
   addSubtask() {
     this.subtasks.push(this.fb.control('', Validators.required));
   }
@@ -44,6 +43,8 @@ export class FormComponent {
     if (this.form.valid) {
       console.log('Form Value:', this.form.value);
       this.closeForm.emit();
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 }
