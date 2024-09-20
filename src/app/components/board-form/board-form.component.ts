@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { addBoard } from '../../store/board.action';
 import { BoardState } from '../../store/board.state';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-board-form',
@@ -12,32 +13,23 @@ import { BoardState } from '../../store/board.state';
 export class BoardFormComponent {
   @Output() closeForm = new EventEmitter<void>();
   form: FormGroup;
-  columns: FormArray;
 
   constructor(private fb: FormBuilder, private store: Store<BoardState>) {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      columns: this.fb.array([]),
+      columns: this.fb.array([this.createColumn(), this.createColumn()]),
     });
-
-    this.columns = this.form.get('columns') as FormArray;
-
-    this.addColumn('ToDo');
-    this.addColumn('Doing');
   }
 
-  addColumn(columnName: string = '') {
-    const columnGroup = this.fb.group({
-      name: [columnName, Validators.required],
+  get columns(): FormArray {
+    return this.form.get('columns') as FormArray;
+  }
+
+  createColumn(): FormGroup {
+    return this.fb.group({
+      name: ['', Validators.required],
       tasks: this.fb.array([]),
     });
-    this.columns.push(columnGroup);
-  }
-
-  removeColumn(index: number) {
-    if (index >= 2) {
-      this.columns.removeAt(index);
-    }
   }
 
   cancel() {
@@ -46,21 +38,16 @@ export class BoardFormComponent {
 
   createNew() {
     if (this.form.valid) {
-      const filledColumns = this.columns.controls
-        .map((columnGroup, index) => ({
-          id: index,
-          name: columnGroup.get('name')?.value,
-          tasks: columnGroup.get('tasks')?.value,
-        }))
-        .filter((col) => col.name.trim() !== '');
-
       const newBoard = {
         id: Date.now(),
         name: this.form.get('name')?.value,
-        columns: filledColumns,
+        columns: this.columns.controls.map((column) => ({
+          id: uuidv4(),
+          name: column.get('name')?.value,
+          tasks: column.get('tasks')?.value || [],
+        })),
       };
 
-      console.log('New Board:', newBoard);
       this.store.dispatch(addBoard({ board: newBoard }));
       this.closeForm.emit();
     } else {

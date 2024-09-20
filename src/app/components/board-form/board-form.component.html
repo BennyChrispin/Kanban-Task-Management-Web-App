@@ -46,7 +46,7 @@
           />
           <div
             *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
-            class="text-red text-sm mt-1 absolute bottom-4 right-4"
+            class="text-red text-xs mt-1 absolute bottom-4 right-4"
           >
             Name is required
           </div>
@@ -59,60 +59,29 @@
           >
 
           <div
-            *ngFor="let column of columns.controls; let i = index"
-            class="flex items-center space-x-2 mb-3 mt-4"
+            formArrayName="columns"
+            class="flex flex-col items-center mt-4 gap-2"
           >
-            <input
-              [formControlName]="i"
-              [placeholder]="i === 0 ? 'e.g., ToDo' : 'e.g., Doing'"
-              class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
-            />
             <div
-              *ngIf="column.get('name')?.invalid && column.get('name')?.touched"
-              class="text-red text-sm mt-1"
+              *ngFor="let column of columns.controls; let i = index"
+              [formGroupName]="i"
+              class="w-full"
             >
-              can't be empty
-            </div>
-            <button
-              type="button"
-              *ngIf="i >= 2"
-              (click)="removeColumn(i)"
-              class="text-softGray font-extrabold hover:text-red duration-300 transition-all ease-in"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <button
-            type="button"
-            (click)="addColumn()"
-            class="mt-4 mb-4 bg-skyRed dark:bg-white px-4 py-3 font-semibold rounded-full shadow w-full text-base text-primary flex items-center justify-center gap-2"
-          >
-            <svg
-              width="12"
-              height="12"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-            >
-              <path
-                d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
+              <input
+                formControlName="name"
+                placeholder="e.g., Doing"
+                class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
               />
-            </svg>
-            Add New Column
-          </button>
+              <div
+                *ngIf="
+                  column.get('name')?.invalid && column.get('name')?.touched
+                "
+                class="text-red text-xs mt-1"
+              >
+                Column is required
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
