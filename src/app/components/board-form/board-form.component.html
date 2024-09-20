@@ -64,7 +64,7 @@
             <div
               *ngFor="let column of columns.controls; let i = index"
               [formGroupName]="i"
-              class="w-full flex space-x-2"
+              class="w-full flex space-x-2 relative"
             >
               <input
                 formControlName="name"
@@ -95,9 +95,9 @@
                 *ngIf="
                   column.get('name')?.invalid && column.get('name')?.touched
                 "
-                class="text-red text-xs mt-1"
+                class="text-red text-xs mt-1 bottom-4 right-12 absolute"
               >
-                Column is required
+                can't be empty
               </div>
             </div>
           </div>
