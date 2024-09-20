@@ -32,6 +32,14 @@ export class BoardFormComponent {
     });
   }
 
+  addColumn() {
+    this.columns.push(this.createColumn());
+  }
+
+  removeColumn(index: number) {
+    this.columns.removeAt(index);
+  }
+
   cancel() {
     this.closeForm.emit();
   }

@@ -42,7 +42,7 @@
             formControlName="name"
             type="text"
             placeholder="e.g., Web Design"
-            class="mt-1 p-3 bg-transparent block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
+            class="mt-1 p-3 bg-transparent block w-full dark:border-[#414552] text-black dark:text-white border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-sm placeholder:text-placeholder dark:placeholder:text-[#606169]"
           />
           <div
             *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
@@ -57,7 +57,6 @@
             class="block text-base font-medium text-softGray dark:text-white"
             >Columns</label
           >
-
           <div
             formArrayName="columns"
             class="flex flex-col items-center mt-4 gap-2"
@@ -65,13 +64,33 @@
             <div
               *ngFor="let column of columns.controls; let i = index"
               [formGroupName]="i"
-              class="w-full"
+              class="w-full flex space-x-2"
             >
               <input
                 formControlName="name"
                 placeholder="e.g., Doing"
-                class="p-3 block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
+                class="p-3 block text-black dark:text-white bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
               />
+              <button
+                type="button"
+                (click)="removeColumn(i)"
+                class="text-softGray hover:text-red font-bold duration-300 transition-all ease-out"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
               <div
                 *ngIf="
                   column.get('name')?.invalid && column.get('name')?.touched
@@ -82,6 +101,28 @@
               </div>
             </div>
           </div>
+          <button
+            type="button"
+            (click)="addColumn()"
+            class="flex items-center justify-center gap-2 mt-6 bg-skyRed hover:bg-primaryLight text-primary hover:text-white px-4 py-3 text-center font-extrabold text-base rounded-full w-full duration-300 transition-all ease-in"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+
+            Add New Column
+          </button>
         </div>
       </form>
     </div>
@@ -89,7 +130,7 @@
     <div class="mt-6 flex justify-end space-x-4 w-full">
       <button
         type="button"
-        class="bg-primary text-white px-4 py-3 rounded-full shadow w-full"
+        class="bg-primary text-white px-4 py-3 rounded-full shadow w-full hover:bg-opacity-80 duration-300 transition-all ease-in"
         (click)="createNew()"
       >
         Create New Board
