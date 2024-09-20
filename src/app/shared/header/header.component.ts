@@ -6,6 +6,8 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
+import { loadBoardColumns } from '../../store/board.action';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +23,8 @@ export class HeaderComponent implements OnChanges {
   @Input() selectedBoardId: number | null = null;
   @Input() selectedBoardName: string | null = null;
   @Output() selectBoard = new EventEmitter<number | null>();
+
+  constructor(private store: Store) {}
 
   // this for localStorage of themes (Dark Mode & Light Mode)
   ngOnInit(): void {
@@ -59,13 +63,13 @@ export class HeaderComponent implements OnChanges {
 
   onSelectBoard(boardItem: any): void {
     if (boardItem && boardItem.name) {
-      this.selectedBoardId = boardItem.id ?? null;
+      this.selectedBoardId = boardItem.id;
       this.selectedBoardName = boardItem.name;
       this.selectBoard.emit(this.selectedBoardId);
-      console.log('Selected Board ID:', this.selectedBoardId);
+
+      this.store.dispatch(loadBoardColumns({ boardId: boardItem.id }));
     }
   }
-
   openModal(): void {
     this.isModalVisible = true;
   }

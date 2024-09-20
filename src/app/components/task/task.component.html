@@ -21,4 +21,5 @@
 <app-task-display
   [tasks]="selectedTask ? [selectedTask] : []"
   [isVisible]="isModalVisible"
+  (closeModal)="closeModal()"
 ></app-task-display>

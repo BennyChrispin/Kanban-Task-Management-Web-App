@@ -20,3 +20,8 @@ export const addTask = createAction(
   '[Board] Add Task',
   props<{ boardId: number; columnId: number; task: Task }>()
 );
+
+export const loadBoardColumns = createAction(
+  '[Board] Load Board Columns',
+  props<{ boardId: number }>()
+);

@@ -11,7 +11,8 @@ export class FormComponent {
 
   form: FormGroup;
   subtasks: FormArray;
-  statusOptions = ['Pending', 'In Progress', 'Completed'];
+  selectedColumn = '';
+  isDropdownOpen = false;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -21,10 +22,10 @@ export class FormComponent {
         this.fb.control('', Validators.required),
         this.fb.control('', Validators.required),
       ]),
-      status: ['', Validators.required],
     });
     this.subtasks = this.form.get('subtasks') as FormArray;
   }
+
   addSubtask() {
     this.subtasks.push(this.fb.control('', Validators.required));
   }
@@ -37,6 +38,16 @@ export class FormComponent {
 
   cancel() {
     this.closeForm.emit();
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  onColumnSelected(column: string) {
+    this.selectedColumn = column;
+    this.toggleDropdown();
+    this.form.patchValue({ status: column });
   }
 
   saveChanges() {

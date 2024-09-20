@@ -143,17 +143,21 @@
           <label
             for="status"
             class="block text-base font-medium text-softGray dark:text-white"
-            >Status</label
           >
-          <select
-            id="status"
-            formControlName="status"
-            class="mt-1 dark:text-white bg-transparent p-3 block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight"
+            Column
+          </label>
+          <input
+            (click)="toggleDropdown()"
+            [value]="selectedColumn"
+            placeholder="Select Column"
+            readonly
+            class="mt-2 cursor-pointer p-3 dark:text-white block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
+          />
+          <app-columns-status
+            [isDropdownOpen]="isDropdownOpen"
+            (selectColumn)="onColumnSelected($event)"
           >
-            <option *ngFor="let status of statusOptions" [value]="status">
-              {{ status }}
-            </option>
-          </select>
+          </app-columns-status>
           <div
             *ngIf="form.get('status')?.invalid && form.get('status')?.touched"
             class="text-red text-xs mt-1 absolute"
