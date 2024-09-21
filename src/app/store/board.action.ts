@@ -18,7 +18,7 @@ export const addColumn = createAction(
 
 export const addTask = createAction(
   '[Board] Add Task',
-  props<{ boardId: number; columnId: number; task: Task }>()
+  props<{ boardId: number; task: Task }>()
 );
 
 export const loadBoardColumns = createAction(

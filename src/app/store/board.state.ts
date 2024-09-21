@@ -11,7 +11,6 @@ export interface Task {
   updatedAt: string;
   boardId: number;
   columnId: number;
-  userId: number;
 }
 
 export interface Column {
