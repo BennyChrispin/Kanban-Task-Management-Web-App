@@ -74,12 +74,7 @@
           </div>
         </div>
 
-        <div class="mb-4 relative">
-          <label
-            class="block text-base font-medium text-softGray dark:text-white"
-            >Subtasks</label
-          >
-
+        <div formArrayName="subtasks">
           <div
             *ngFor="let subtask of subtasks.controls; let i = index"
             class="flex items-center space-x-2 mb-3 mt-4"
@@ -120,23 +115,6 @@
               </svg>
             </button>
           </div>
-          <button
-            type="button"
-            (click)="addSubtask()"
-            class="mt-4 mb-4 bg-skyRed dark:bg-white px-4 py-3 font-semibold rounded-full shadow w-full text-base text-primary flex items-center justify-center gap-2"
-          >
-            <svg
-              width="12"
-              height="12"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-            >
-              <path
-                d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
-              />
-            </svg>
-            Add New Subtask
-          </button>
         </div>
 
         <div class="mb-4 relative">

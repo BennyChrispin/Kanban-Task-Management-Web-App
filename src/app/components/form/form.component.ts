@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { addTask } from '../../store/board.action';
 
 @Component({
   selector: 'app-form',
@@ -10,28 +11,24 @@ import { Observable } from 'rxjs';
 export class FormComponent {
   @Output() closeForm = new EventEmitter<void>();
   @Input() columns: any[] = [];
+  @Input() boardId: number | null = null;
 
   form: FormGroup;
   subtasks: FormArray;
-  selectedColumn = '';
-  isDropdownOpen = false;
-  columns$: Observable<any[]> | undefined;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store) {
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: [''],
-      subtasks: this.fb.array([
-        this.fb.control('', Validators.required),
-        this.fb.control('', Validators.required),
-      ]),
-      selectedColumn: [null, Validators.required],
+      subtasks: this.fb.array([this.fb.control(''), this.fb.control('')]),
+      selectedColumn: [null, Validators.required], // Ensure it's not undefined
     });
+
     this.subtasks = this.form.get('subtasks') as FormArray;
   }
 
   addSubtask() {
-    this.subtasks.push(this.fb.control('', Validators.required));
+    this.subtasks.push(this.fb.control(''));
   }
 
   removeSubtask(index: number) {
@@ -44,19 +41,31 @@ export class FormComponent {
     this.closeForm.emit();
   }
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  onColumnSelected(column: string) {
-    this.selectedColumn = column;
-    this.toggleDropdown();
-    this.form.patchValue({ status: column });
-  }
-
   saveChanges() {
-    if (this.form.valid) {
-      console.log('Form Value:', this.form.value);
+    if (this.form.valid && this.boardId !== null) {
+      const selectedColumnId = this.form.value.selectedColumn;
+      const selectedColumn = this.columns?.find(
+        (column) => column.id === selectedColumnId
+      );
+
+      const task = {
+        title: this.form.value.title,
+        description: this.form.value.description,
+        // Safely assign status
+        status: selectedColumn ? selectedColumn.name : 'No Status',
+        subtasks: this.form.value.subtasks.map(
+          (title: string, index: number) => ({
+            id: index + 1,
+            title,
+            isComplete: false,
+          })
+        ),
+      };
+
+      // Dispatch the add task action
+      this.store.dispatch(addTask({ boardId: this.boardId, task }));
+
+      // Close form after saving
       this.closeForm.emit();
     } else {
       this.form.markAllAsTouched();

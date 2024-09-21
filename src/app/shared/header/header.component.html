@@ -201,6 +201,7 @@
 <app-form
   *ngIf="isModalVisible"
   [columns]="(selectedBoard$ | async)?.columns || []"
+  [boardId]="selectedBoardId"
   (closeForm)="closeModal()"
 ></app-form>
 <app-board-form *ngIf="isModalForm" (closeForm)="closeForm()"></app-board-form>

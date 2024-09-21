@@ -5,6 +5,7 @@ import {
   addBoard,
   loadBoardColumns,
   addColumn,
+  addTask,
 } from './board.action';
 
 export const boardReducer = createReducer(
@@ -26,6 +27,29 @@ export const boardReducer = createReducer(
         id: boardId,
         changes: {
           columns: [...boardColumns, column],
+        },
+      },
+      state
+    );
+  }),
+  on(addTask, (state, { boardId, task }) => {
+    const board = state.entities[boardId];
+
+    const updatedColumns = board?.columns.map((column: any) => {
+      if (column.id === task.status) {
+        return {
+          ...column,
+          tasks: [...column.tasks, task],
+        };
+      }
+      return column;
+    });
+
+    return adapter.updateOne(
+      {
+        id: boardId,
+        changes: {
+          columns: updatedColumns,
         },
       },
       state

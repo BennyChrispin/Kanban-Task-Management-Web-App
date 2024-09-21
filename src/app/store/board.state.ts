@@ -1,7 +1,6 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
 export interface Task {
-  id: number;
   title: string;
   description: string;
   status: string;
