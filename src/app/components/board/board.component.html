@@ -1,6 +1,9 @@
 <div
   *ngIf="selectedBoard$ | async as selectedBoard; else noBoardSelected"
   class="overflow-x-auto"
+  [ngClass]="{
+    'blur-sm': isModalColumnVisible
+  }"
 >
   <div
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 space-x-4"
@@ -30,6 +33,7 @@
       class="flex flex-col items-center justify-center bg-darkBlue dark:bg-darkTrans rounded-xl mt-10"
     >
       <button
+        (click)="openModal()"
         class="text-softGray font-semibold text-lg flex items-center justify-center gap-2"
       >
         <svg
@@ -54,3 +58,9 @@
     </p>
   </div>
 </ng-template>
+
+<!-- Column Modal -->
+<app-columns-form
+  *ngIf="isModalColumnVisible"
+  (closeForm)="closeModal()"
+></app-columns-form>

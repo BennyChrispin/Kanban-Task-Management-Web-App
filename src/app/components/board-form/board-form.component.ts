@@ -12,7 +12,6 @@ import { BoardState } from '../../store/board.state';
 export class BoardFormComponent {
   @Output() closeForm = new EventEmitter<void>();
   form: FormGroup;
-
   constructor(private fb: FormBuilder, private store: Store<BoardState>) {
     this.form = this.fb.group({
       name: ['', Validators.required],

@@ -33,6 +33,7 @@ export class BoardComponent implements OnInit, OnChanges {
     Next: '#8471F2',
     Later: '#67E2AE',
   };
+  isModalColumnVisible: any;
 
   constructor(private store: Store<BoardState>) {}
 
@@ -72,5 +73,11 @@ export class BoardComponent implements OnInit, OnChanges {
         event.currentIndex
       );
     }
+  }
+  closeModal(): void {
+    this.isModalColumnVisible = false;
+  }
+  openModal(): void {
+    this.isModalColumnVisible = true;
   }
 }
