@@ -9,12 +9,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectBoardById } from '../../store/board.selectors';
 import { BoardState } from '../../store/board.state';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { addColumn } from '../../store/board.action';
 import { Task } from '../../core/models/task.model';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board',
@@ -33,7 +30,7 @@ export class BoardComponent implements OnInit, OnChanges {
     Next: '#8471F2',
     Later: '#67E2AE',
   };
-  isModalColumnVisible: any;
+  isModalColumnVisible: boolean = false;
 
   constructor(private store: Store<BoardState>) {}
 
@@ -41,13 +38,9 @@ export class BoardComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedBoardId'] && this.selectedBoardId !== null) {
-      console.log('selectedBoardId has changed:', this.selectedBoardId);
       this.selectedBoard$ = this.store.select(
         selectBoardById(this.selectedBoardId)
       );
-      this.selectedBoard$.subscribe((board) => {
-        console.log('Selected Board:', board);
-      });
     }
   }
 
@@ -74,10 +67,28 @@ export class BoardComponent implements OnInit, OnChanges {
       );
     }
   }
+
+  openModal(): void {
+    this.isModalColumnVisible = true;
+  }
+
   closeModal(): void {
     this.isModalColumnVisible = false;
   }
-  openModal(): void {
-    this.isModalColumnVisible = true;
+
+  createColumn(columnName: string): void {
+    if (this.selectedBoardId !== null) {
+      this.store.dispatch(
+        addColumn({
+          boardId: this.selectedBoardId,
+          column: {
+            name: columnName,
+            tasks: [],
+            id: '',
+          },
+        })
+      );
+      this.closeModal();
+    }
   }
 }

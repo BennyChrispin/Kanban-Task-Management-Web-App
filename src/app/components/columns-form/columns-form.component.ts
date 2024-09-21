@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ColumnsFormComponent {
   @Output() closeForm = new EventEmitter<void>();
+  @Output() createColumn = new EventEmitter<string>();
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -20,10 +21,9 @@ export class ColumnsFormComponent {
     this.closeForm.emit();
   }
 
-  createColumn() {
+  submitForm() {
     if (this.form.valid) {
-      console.log('Form Value:', this.form.value);
-      this.closeForm.emit();
+      this.createColumn.emit(this.form.value.name);
     } else {
       this.form.markAllAsTouched();
     }

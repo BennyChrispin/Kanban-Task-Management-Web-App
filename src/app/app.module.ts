@@ -10,7 +10,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TaskComponent } from './components/task/task.component';
 import { BoardComponent } from './components/board/board.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { ModalComponent } from './shared/modal/modal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { boardReducer } from './store/board.reducer';
 import { FormComponent } from './components/form/form.component';
@@ -24,7 +23,6 @@ import { ColumnsFormComponent } from './components/columns-form/columns-form.com
     TaskComponent,
     BoardComponent,
     HeaderComponent,
-    ModalComponent,
     FormComponent,
     BoardFormComponent,
     TaskDisplayComponent,

@@ -1,6 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { adapter, initialState } from './board.state';
-import { loadBoards, addBoard, loadBoardColumns } from './board.action';
+import {
+  loadBoards,
+  addBoard,
+  loadBoardColumns,
+  addColumn,
+} from './board.action';
 
 export const boardReducer = createReducer(
   initialState,
@@ -13,8 +18,17 @@ export const boardReducer = createReducer(
     return adapter.setAll(validBoards, state);
   }),
   on(addBoard, (state, { board }) => adapter.addOne(board, state)),
-  on(loadBoardColumns, (state, { boardId }) => {
-    // Logic to load columns for the selected board
-    return state;
+  on(loadBoardColumns, (state, { boardId }) => state),
+  on(addColumn, (state, { boardId, column }) => {
+    const boardColumns = state.entities[boardId]?.columns ?? [];
+    return adapter.updateOne(
+      {
+        id: boardId,
+        changes: {
+          columns: [...boardColumns, column],
+        },
+      },
+      state
+    );
   })
 );

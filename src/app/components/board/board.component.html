@@ -63,4 +63,5 @@
 <app-columns-form
   *ngIf="isModalColumnVisible"
   (closeForm)="closeModal()"
+  (createColumn)="createColumn($event)"
 ></app-columns-form>
