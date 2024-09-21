@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -13,6 +14,7 @@ export class FormComponent {
   subtasks: FormArray;
   selectedColumn = '';
   isDropdownOpen = false;
+  columns$: Observable<any[]> | undefined;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({

@@ -146,23 +146,28 @@
           >
             Column
           </label>
+
           <input
             (click)="toggleDropdown()"
-            [value]="selectedColumn"
+            [value]="selectedColumn || 'Select Column'"
             placeholder="Select Column"
             readonly
-            class="mt-2 cursor-pointer p-3 dark:text-white block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight placeholder:text-placeholder placeholder:text-sm dark:placeholder:text-[#606169]"
+            class="mt-2 cursor-pointer p-3 dark:text-white block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none"
           />
-          <app-columns-status
-            [isDropdownOpen]="isDropdownOpen"
-            (selectColumn)="onColumnSelected($event)"
-          >
-          </app-columns-status>
+
           <div
-            *ngIf="form.get('status')?.invalid && form.get('status')?.touched"
-            class="text-red text-xs mt-1 absolute"
+            *ngIf="isDropdownOpen"
+            class="mt-2 bg-white dark:bg-darkGray shadow-md rounded-lg p-4 z-50 bottom-0 w-full"
           >
-            Status is required
+            <div
+              *ngFor="let column of columns$ | async"
+              (click)="onColumnSelected(column.name)"
+              class="cursor-pointer py-1"
+            >
+              <span class="text-lg text-softGray dark:text-white font-medium">{{
+                column.name
+              }}</span>
+            </div>
           </div>
         </div>
       </form>
