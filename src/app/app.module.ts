@@ -17,7 +17,6 @@ import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BoardFormComponent } from './components/board-form/board-form.component';
 import { TaskDisplayComponent } from './components/task-display/task-display.component';
-import { ColumnsStatusComponent } from './components/columns-status/columns-status.component';
 import { ColumnsFormComponent } from './components/columns-form/columns-form.component';
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { ColumnsFormComponent } from './components/columns-form/columns-form.com
     FormComponent,
     BoardFormComponent,
     TaskDisplayComponent,
-    ColumnsStatusComponent,
     ColumnsFormComponent,
   ],
   imports: [
