@@ -5,16 +5,17 @@ export interface Task {
   title: string;
   description: string;
   status: string;
-  priority: string;
-  dueDate: string;
-  createdAt: string;
-  updatedAt: string;
-  boardId: number;
-  columnId: number;
+  subtasks: [];
+}
+
+export interface SubTask {
+  id: number;
+  title: string;
+  isComplete: boolean;
 }
 
 export interface Column {
-  id: string;
+  id: number;
   name: string;
   tasks: any[];
 }

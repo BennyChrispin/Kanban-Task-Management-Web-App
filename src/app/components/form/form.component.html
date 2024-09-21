@@ -139,35 +139,37 @@
           </button>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4 relative">
           <label
-            for="status"
+            for="selectedColumn"
             class="block text-base font-medium text-softGray dark:text-white"
           >
             Column
           </label>
+          <select
+            id="selectedColumn"
+            formControlName="selectedColumn"
+            class="mt-1 p-3 dark:text-white bg-white dark:bg-darkGray block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight"
+          >
+            <option value="">Select Column</option>
 
-          <input
-            (click)="toggleDropdown()"
-            [value]="selectedColumn || 'Select Column'"
-            placeholder="Select Column"
-            readonly
-            class="mt-2 cursor-pointer p-3 dark:text-white block bg-transparent dark:border-[#414552] w-full border border-borderForm rounded-md shadow-sm focus:outline-none"
-          />
+            <option
+              *ngFor="let column of columns"
+              [value]="column.id"
+              class="bg-white p-2 rounded-md"
+            >
+              {{ column.name }}
+            </option>
+          </select>
 
           <div
-            *ngIf="isDropdownOpen"
-            class="mt-2 bg-white dark:bg-darkGray shadow-md rounded-lg p-4 z-50 bottom-0 w-full"
+            *ngIf="
+              form.get('selectedColumn')?.invalid &&
+              form.get('selectedColumn')?.touched
+            "
+            class="text-red text-xs mt-1 absolute right-4 bottom-4"
           >
-            <div
-              *ngFor="let column of columns$ | async"
-              (click)="onColumnSelected(column.name)"
-              class="cursor-pointer py-1"
-            >
-              <span class="text-lg text-softGray dark:text-white font-medium">{{
-                column.name
-              }}</span>
-            </div>
+            Column is required
           </div>
         </div>
       </form>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class FormComponent {
   @Output() closeForm = new EventEmitter<void>();
+  @Input() columns: any[] = [];
 
   form: FormGroup;
   subtasks: FormArray;
@@ -24,6 +25,7 @@ export class FormComponent {
         this.fb.control('', Validators.required),
         this.fb.control('', Validators.required),
       ]),
+      selectedColumn: [null, Validators.required],
     });
     this.subtasks = this.form.get('subtasks') as FormArray;
   }

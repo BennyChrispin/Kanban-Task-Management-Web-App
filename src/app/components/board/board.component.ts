@@ -84,7 +84,7 @@ export class BoardComponent implements OnInit, OnChanges {
           column: {
             name: columnName,
             tasks: [],
-            id: '',
+            id: Date.now(),
           },
         })
       );

@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BoardFormComponent } from './components/board-form/board-form.component';
 import { TaskDisplayComponent } from './components/task-display/task-display.component';
 import { ColumnsFormComponent } from './components/columns-form/columns-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,

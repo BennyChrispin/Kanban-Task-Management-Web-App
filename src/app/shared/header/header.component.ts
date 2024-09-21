@@ -8,6 +8,9 @@ import {
 } from '@angular/core';
 import { loadBoardColumns } from '../../store/board.action';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectBoardById } from '../../store/board.selectors';
+import { Board } from '../../store/board.state';
 
 @Component({
   selector: 'app-header',
@@ -24,9 +27,11 @@ export class HeaderComponent implements OnChanges {
   @Input() selectedBoardName: string | null = null;
   @Output() selectBoard = new EventEmitter<number | null>();
 
+  boardColumns$: Observable<any[]> | undefined;
+  selectedBoard$!: Observable<Board | undefined>;
+
   constructor(private store: Store) {}
 
-  // this for localStorage of themes (Dark Mode & Light Mode)
   ngOnInit(): void {
     this.isDarkMode = localStorage.getItem('theme') === 'dark';
     this.updateTheme();
@@ -60,7 +65,6 @@ export class HeaderComponent implements OnChanges {
       document.documentElement.classList.remove('dark');
     }
   }
-
   onSelectBoard(boardItem: any): void {
     if (boardItem && boardItem.name) {
       this.selectedBoardId = boardItem.id;
@@ -68,8 +72,17 @@ export class HeaderComponent implements OnChanges {
       this.selectBoard.emit(this.selectedBoardId);
 
       this.store.dispatch(loadBoardColumns({ boardId: boardItem.id }));
+
+      this.selectedBoard$ = this.store.select(selectBoardById(boardItem.id));
+
+      this.selectedBoard$.subscribe((selectedBoard) => {
+        if (selectedBoard) {
+          console.log('Loaded columns for board:', selectedBoard.columns);
+        }
+      });
     }
   }
+
   openModal(): void {
     this.isModalVisible = true;
   }

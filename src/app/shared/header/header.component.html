@@ -198,5 +198,9 @@
 </button>
 
 <!-- Modal of Form -->
-<app-form *ngIf="isModalVisible" (closeForm)="closeModal()"></app-form>
+<app-form
+  *ngIf="isModalVisible"
+  [columns]="(selectedBoard$ | async)?.columns || []"
+  (closeForm)="closeModal()"
+></app-form>
 <app-board-form *ngIf="isModalForm" (closeForm)="closeForm()"></app-board-form>
