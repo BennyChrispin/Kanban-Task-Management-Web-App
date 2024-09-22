@@ -14,6 +14,7 @@ export class TaskComponent {
   openModal(task: any): void {
     this.selectedTask = task;
     this.isModalVisible = true;
+    console.log('this Task', this.selectedTask);
   }
 
   closeModal(): void {
