@@ -179,7 +179,10 @@
 
     <!-- Main Content -->
     <div class="flex-1 overflow-y-auto mt-24 p-6">
-      <app-board [selectedBoardId]="selectedBoardId"></app-board>
+      <app-board
+        [selectedBoardId]="selectedBoardId"
+        (onTaskSelected)="handleTaskSelected($event)"
+      ></app-board>
     </div>
   </div>
 </div>

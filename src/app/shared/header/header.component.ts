@@ -83,6 +83,10 @@ export class HeaderComponent implements OnChanges {
     }
   }
 
+  handleTaskSelected(event: any): void {
+    console.log('Task selected:', event);
+  }
+
   openModal(): void {
     this.isModalVisible = true;
   }

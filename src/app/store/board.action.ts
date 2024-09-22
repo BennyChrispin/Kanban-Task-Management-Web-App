@@ -25,3 +25,13 @@ export const loadBoardColumns = createAction(
   '[Board] Load Board Columns',
   props<{ boardId: number }>()
 );
+
+export const updateSubtaskStatus = createAction(
+  '[Task] Update Subtask Status',
+  props<{
+    boardId: number;
+    taskId: number;
+    subtaskId: number;
+    isComplete: boolean;
+  }>()
+);

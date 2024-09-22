@@ -1,11 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
-import { adapter, initialState } from './board.state';
+import { adapter, Column, initialState, SubTask, Task } from './board.state';
 import {
   loadBoards,
   addBoard,
   loadBoardColumns,
   addColumn,
   addTask,
+  updateSubtaskStatus,
 } from './board.action';
 
 export const boardReducer = createReducer(
@@ -54,5 +55,36 @@ export const boardReducer = createReducer(
       },
       state
     );
-  })
+  }),
+  on(
+    updateSubtaskStatus,
+    (state, { boardId, taskId, subtaskId, isComplete }) => {
+      const board = state.entities[boardId];
+
+      if (!board) return state;
+
+      const updatedColumns = board.columns.map((column: Column) => ({
+        ...column,
+        tasks: column.tasks.map((task: Task) => {
+          if (taskId === taskId) {
+            return {
+              ...task,
+              subtasks: task.subtasks.map((subtask: SubTask) => {
+                if (subtask.id === subtaskId) {
+                  return { ...subtask, isComplete };
+                }
+                return subtask;
+              }),
+            };
+          }
+          return task;
+        }),
+      }));
+
+      return adapter.updateOne(
+        { id: boardId, changes: { columns: updatedColumns } },
+        state
+      );
+    }
+  )
 );

@@ -30,17 +30,35 @@
         <h2 class="text-lg font-bold text-black dark:text-white w-4/5">
           {{ task.title }}
         </h2>
-        <button
-          class="text-lightGray dark:text-borderForm dark:hover:border-black dark:border-white font-bold"
-        >
-          <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
-            <g fill="currentColor" fill-rule="evenodd">
-              <circle cx="2.308" cy="2.308" r="2.308" />
-              <circle cx="2.308" cy="10" r="2.308" />
-              <circle cx="2.308" cy="17.692" r="2.308" />
-            </g>
-          </svg>
-        </button>
+        <div class="relative group">
+          <button
+            (click)="toggleOptions(task)"
+            class="text-lightGray dark:text-borderForm dark:hover:border-black dark:border-white font-bold"
+          >
+            <svg width="5" height="20" xmlns="http://www.w3.org/2000/svg">
+              <g fill="currentColor" fill-rule="evenodd">
+                <circle cx="2.308" cy="2.308" r="2.308" />
+                <circle cx="2.308" cy="10" r="2.308" />
+                <circle cx="2.308" cy="17.692" r="2.308" />
+              </g>
+            </svg>
+          </button>
+          <div
+            *ngIf="task.showOptions"
+            class="absolute -left-16 mt-2 w-44 bg-white dark:bg-darkGray p-4 rounded-lg shadow-lg flex flex-col items-start"
+          >
+            <button
+              class="font-medium hover:font-bold duration-300 transition-all ease-in text-lg text-softGray"
+            >
+              Edit Task
+            </button>
+            <button
+              class="font-medium hover:font-bold duration-300 transition-all ease-in text-lg text-red mt-2"
+            >
+              Delete Task
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="mt-4">
@@ -58,14 +76,22 @@
             >
               <input
                 type="checkbox"
-                [checked]="subtask.isCompleted"
+                [checked]="subtask.isComplete"
                 class="custom-checkbox h-6 w-6"
+                (change)="
+                  onSubtaskCompletionChange(
+                    $event,
+                    boardId,
+                    task.id,
+                    subtask.id
+                  )
+                "
               />
 
               <span
                 [ngClass]="{
-                  'line-through text-softGray': subtask.isCompleted,
-                  'text-black dark:text-white': !subtask.isCompleted
+                  'line-through text-softGray': subtask.isComplete,
+                  'text-black dark:text-white': !subtask.isComplete
                 }"
                 class="text-base font-semibold"
               >

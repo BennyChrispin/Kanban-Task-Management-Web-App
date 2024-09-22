@@ -4,6 +4,8 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -21,6 +23,7 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 export class BoardComponent implements OnInit, OnChanges {
   selectedBoard$!: Observable<any>;
   @Input() selectedBoardId!: number | null;
+  @Output() selectBoard = new EventEmitter<number | null>();
 
   columnColorMap: { [key: string]: string } = {
     Todo: '#49C4E5',
@@ -70,6 +73,7 @@ export class BoardComponent implements OnInit, OnChanges {
 
   openModal(): void {
     this.isModalColumnVisible = true;
+    this.selectBoard.emit(this.selectedBoardId);
   }
 
   closeModal(): void {

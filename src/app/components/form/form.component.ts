@@ -62,10 +62,8 @@ export class FormComponent {
         ),
       };
 
-      // Dispatch the add task action
       this.store.dispatch(addTask({ boardId: this.boardId, task }));
-
-      // Close form after saving
+      
       this.closeForm.emit();
     } else {
       this.form.markAllAsTouched();

@@ -7,6 +7,17 @@ import { Component, Input } from '@angular/core';
 })
 export class TaskComponent {
   @Input() tasks!: any[];
+  @Input() selectedBoardId: number | null = null;
+
+  ngOnInit(): void {
+    if (this.selectedBoardId) {
+      this.loadTasksForBoard(this.selectedBoardId);
+    }
+  }
+
+  loadTasksForBoard(boardId: number): void {
+    console.log('Loading tasks for board ID:', boardId);
+  }
 
   selectedTask: any | null = null;
   isModalVisible: boolean = false;
