@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BoardState } from './store/board.state';
 import { selectAllBoards } from './store/board.selectors';
-import { tap, map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,7 @@ import { tap, map } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   selectedBoardId: number | null = null;
+  selectedBoardName: string | null = null;
   boards$!: Observable<any[]>;
 
   constructor(
@@ -29,14 +30,16 @@ export class AppComponent implements OnInit {
         );
         if (defaultBoard) {
           this.selectedBoardId = defaultBoard.id;
+          this.selectedBoardName = defaultBoard.name;
         }
       })
     );
   }
 
-  onBoardSelected(boardId: number | null) {
-    if (boardId !== null) {
-      this.selectedBoardId = boardId;
+  onBoardSelected(selectedBoard: any) {
+    if (selectedBoard && selectedBoard.id !== null) {
+      this.selectedBoardId = selectedBoard.id;
+      this.selectedBoardName = selectedBoard.name;
       console.log('Selected Board ID in AppComponent:', this.selectedBoardId);
     }
   }

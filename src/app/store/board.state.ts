@@ -1,6 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
 export interface Task {
+  id: number;
   title: string;
   description: string;
   status: string;
@@ -16,7 +17,7 @@ export interface SubTask {
 export interface Column {
   id: number;
   name: string;
-  tasks: any[];
+  tasks: Task[];
 }
 
 export interface Board {
@@ -26,11 +27,14 @@ export interface Board {
 }
 
 export interface BoardState extends EntityState<Board> {
+  tasks: any;
   selectedBoardId: number | null;
 }
 
 export const adapter: EntityAdapter<Board> = createEntityAdapter<Board>();
 
-export const initialState: BoardState = adapter.getInitialState({
+export const initialState: BoardState = {
+  ...adapter.getInitialState(),
+  tasks: null,
   selectedBoardId: null,
-});
+};

@@ -17,8 +17,8 @@ export const addColumn = createAction(
 );
 
 export const addTask = createAction(
-  '[Board] Add Task',
-  props<{ boardId: number; task: Task }>()
+  '[Task] Add Task',
+  props<{ boardId: string; tasks: Task }>()
 );
 
 export const loadBoardColumns = createAction(
@@ -34,4 +34,8 @@ export const updateSubtaskStatus = createAction(
     subtaskId: number;
     isComplete: boolean;
   }>()
+);
+export const editTask = createAction(
+  '[Task] Edit Task',
+  props<{ taskId: string; updates: Partial<Task> }>()
 );

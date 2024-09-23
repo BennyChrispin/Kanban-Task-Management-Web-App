@@ -1,142 +1,148 @@
 <div class="flex min-h-screen">
-  <!-- Sidebar -->
-  <div
-    class="flex flex-col bg-white dark:bg-mediumGray w-80 border-r border-lightBlue dark:border-lightGray fixed min-h-screen top-0 left-0"
-    [ngClass]="{ 'sidebar-hidden': !isSidebarVisible }"
-  >
-    <div class="pr-8 mt-10">
-      <img
-        [src]="
-          isDarkMode
-            ? '../../../assets/icons/logo-light.svg'
-            : '../../../assets/icons/logo-dark.svg'
-        "
-        alt="Logo"
-        class="w-4/5 h-8 pl-8"
-      />
-      <h2 class="text-softGray font-medium text-base mt-20 pl-6">
-        ALL BOARD &nbsp; ({{ board.length }})
-      </h2>
-      <div class="mt-4">
-        <ng-container *ngIf="board && board.length > 0">
-          <button
-            *ngFor="let boardItem of board"
-            [ngClass]="{
-              'bg-primary text-white rounded-r-full':
-                boardItem.id === selectedBoardId,
-              'hover:bg-[#EFEFF9] hover:text-primary hover:rounded-r-full':
-                boardItem.id !== selectedBoardId
-            }"
-            class="flex items-center space-x-4 px-8 duration-300 transition-all ease-in-out p-4 text-softGray font-semibold text-lg"
-            (click)="onSelectBoard(boardItem)"
-          >
-            <svg
-              width="16"
-              height="16"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-            >
-              <path
-                d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
-              />
-            </svg>
-            <span>{{ boardItem.name }}</span>
-          </button>
-        </ng-container>
-
-        <button
-          (click)="openForm()"
-          class="flex items-center space-x-4 px-8 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-4 text-primary font-semibold text-lg hover:text-white"
-        >
-          <svg
-            width="16"
-            height="16"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-          >
-            <path
-              d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
-            />
-          </svg>
-          <span class="flex items-center gap-2">
-            <svg
-              width="12"
-              height="12"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-            >
-              <path
-                d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
-              />
-            </svg>
-
-            Create New Board
-          </span>
-        </button>
-      </div>
-    </div>
-
-    <div class="mt-auto mb-14">
+  <!-- Sidebar for larger screens -->
+  <ng-container *ngIf="!isMobileScreen || isSidebarVisible">
+    <ng-container *ngIf="!isSidebarModalVisible">
       <div
-        class="bg-lightBlue dark:bg-darkGray rounded-lg p-5 flex items-center justify-between px-10 mx-8"
+        class="flex flex-col bg-white dark:bg-mediumGray w-80 border-r border-lightBlue dark:border-lightGray fixed min-h-screen top-0 left-0"
+        [ngClass]="{
+          'sidebar-hidden': !isSidebarVisible,
+          'hidden sm:block': true
+        }"
+        (close)="toggleSidebarModal()"
       >
-        <img
-          src="../../../assets/icons/icon-light-theme.svg"
-          alt="icon of light"
-          class="w-6 h-6"
-        />
-        <button
-          (click)="toggleDarkMode()"
-          class="p-[5px] w-1/3 rounded-full transition-colors duration-300 ease-in-out bg-primary dark:bg-dark-primary"
-        >
-          <div
-            class="w-5 h-5 transition-colors duration-300 ease-in-out bg-white dark:bg-dark-white rounded-full"
-            [ngClass]="{
-              'translate-x-0': !isDarkMode,
-              'translate-x-7': isDarkMode
-            }"
-          ></div>
-        </button>
+        <!-- Sidebar Content -->
+        <div class="pr-8 mt-10">
+          <img
+            [src]="
+              isDarkMode
+                ? '../../../assets/icons/logo-light.svg'
+                : '../../../assets/icons/logo-dark.svg'
+            "
+            alt="Logo"
+            class="w-4/5 h-8 pl-8"
+          />
+          <h2 class="text-softGray font-medium text-base mt-20 pl-6">
+            ALL BOARD &nbsp; ({{ board.length }})
+          </h2>
+          <div class="mt-4">
+            <ng-container *ngIf="board && board.length > 0">
+              <button
+                *ngFor="let boardItem of board"
+                [ngClass]="{
+                  'bg-primary text-white rounded-r-full':
+                    boardItem.id === selectedBoardId,
+                  'hover:bg-[#EFEFF9] hover:text-primary hover:rounded-r-full':
+                    boardItem.id !== selectedBoardId
+                }"
+                class="flex items-center space-x-4 px-8 duration-300 transition-all ease-in-out p-4 text-softGray font-semibold text-lg"
+                (click)="onSelectBoard(boardItem)"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
+                  />
+                </svg>
+                <span>{{ boardItem.name }}</span>
+              </button>
+            </ng-container>
 
-        <img
-          src="../../../assets/icons/icon-dark-theme.svg"
-          alt="icon of dark"
-          class="w-6 h-6"
-        />
+            <button
+              (click)="openForm()"
+              class="flex items-center space-x-4 px-8 hover:bg-primary hover:rounded-r-full w-full duration-300 transition-all ease-in-out p-4 text-primary font-semibold text-lg hover:text-white"
+            >
+              <svg
+                width="16"
+                height="16"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+              >
+                <path
+                  d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
+                />
+              </svg>
+              <span class="flex items-center gap-2">
+                <svg
+                  width="12"
+                  height="12"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
+                  />
+                </svg>
+
+                Create New Board
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-60">
+          <!-- Dark mode toggle and Hide Sidebar Button -->
+          <div
+            class="bg-lightBlue dark:bg-darkGray rounded-lg p-5 flex items-center justify-between px-10 mx-8"
+          >
+            <img
+              src="../../../assets/icons/icon-light-theme.svg"
+              alt="icon of light"
+              class="w-6 h-6"
+            />
+            <button
+              (click)="toggleDarkMode()"
+              class="p-[5px] w-1/3 rounded-full transition-colors duration-300 ease-in-out bg-primary dark:bg-dark-primary"
+            >
+              <div
+                class="w-5 h-5 transition-colors duration-300 ease-in-out bg-white dark:bg-dark-white rounded-full"
+                [ngClass]="{
+                  'translate-x-0': !isDarkMode,
+                  'translate-x-7': isDarkMode
+                }"
+              ></div>
+            </button>
+
+            <img
+              src="../../../assets/icons/icon-dark-theme.svg"
+              alt="icon of dark"
+              class="w-6 h-6"
+            />
+          </div>
+          <button
+            class="mt-4 flex items-center space-x-4 text-softGray font-semibold hover:bg-skyRed duration-300 transition-all ease-in-out hover:text-primary p-4 px-10 rounded-r-full"
+            (click)="toggleSidebar()"
+          >
+            <img
+              src="../../../assets/icons/icon-hide-sidebar.svg"
+              alt="Icon of Hidden"
+              class="w-6 h-6"
+            />
+            <span>Hide SideBar</span>
+          </button>
+        </div>
       </div>
-      <button
-        class="mt-4 flex items-center space-x-4 text-softGray font-semibold hover:bg-skyRed duration-300 transition-all ease-in-out hover:text-primary p-4 px-10 rounded-r-full"
-        (click)="toggleSidebar()"
-      >
-        <img
-          src="../../../assets/icons/icon-hide-sidebar.svg"
-          alt="Icon of Hidden"
-          class="w-6 h-6"
-        />
-        <span>Hide SideBar</span>
-      </button>
-    </div>
-  </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- Main Content -->
   <div
     class="flex-1 flex flex-col"
     [ngClass]="{
-      'ml-80': isSidebarVisible,
-      'ml-0': !isSidebarVisible,
-      'blur-sm': isModalVisible || isModalForm,
+      'ml-80': isSidebarVisible && !isMobileScreen,
+      'ml-0': !isSidebarVisible
     }"
   >
     <!-- Top Navbar -->
     <div
-      [ngClass]="{
-        'content-with-sidebar': isSidebarVisible,
-        'content-without-sidebar': !isSidebarVisible,
-      }"
       class="bg-white dark:bg-mediumGray border-b border-lightBlue dark:border-lightGray py-6 px-6 fixed top-0 left-0 right-0 z-10"
     >
       <div class="flex items-center justify-between w-full">
-        <!-- Conditionally render logo and divider based on isSidebarVisible -->
         <div class="flex items-center space-x-10">
-          <div *ngIf="!isSidebarVisible" class="flex items-center space-x-10">
+          <div *ngIf="isSidebarVisible" class="flex items-center space-x-10">
             <img
               [src]="
                 isDarkMode
@@ -150,10 +156,28 @@
               class="w-[2px] h-full left-[170px] absolute bg-lightBlue dark:bg-lightGray"
             ></div>
           </div>
-
-          <h2 class="text-black font-bold text-lg dark:text-white">
-            {{ selectedBoardName || "Platform Launch" }}
-          </h2>
+          <div class="flex items-center space-x-4">
+            <h2 class="text-black font-bold text-lg dark:text-white">
+              {{ selectedBoardName }}
+            </h2>
+            <button
+              class="text-primary md:hidden block"
+              (click)="toggleSidebarModal()"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="size-5"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div class="flex items-center space-x-6">
@@ -167,17 +191,16 @@
             />
             <span class="hidden md:block">Add New Task</span>
           </button>
-          <button>
-            <img
-              src="../../../assets/icons/icon-vertical-ellipsis.svg"
-              alt="eclipse Icons"
-            />
-          </button>
+
+          <img
+            src="../../../assets/icons/icon-vertical-ellipsis.svg"
+            alt="Elipsis Menu"
+            class="cursor-pointer"
+          />
         </div>
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="flex-1 overflow-y-auto mt-24 p-6">
       <app-board
         [selectedBoardId]="selectedBoardId"
@@ -187,9 +210,8 @@
   </div>
 </div>
 
-<!-- Button of SideBar Visible -->
 <button
-  *ngIf="!isSidebarVisible"
+  *ngIf="!isSidebarVisible && isMobileScreen"
   class="absolute bottom-14 p-4 rounded-r-full px-6 bg-primary flex items-center justify-center text-white"
   (click)="toggleSidebar()"
 >
@@ -200,11 +222,9 @@
   />
 </button>
 
-<!-- Modal of Form -->
 <app-form
   *ngIf="isModalVisible"
-  [columns]="(selectedBoard$ | async)?.columns || []"
-  [boardId]="selectedBoardId"
+  [boardId]="selectedBoardId?.toString() || ''"
   (closeForm)="closeModal()"
 ></app-form>
 <app-board-form *ngIf="isModalForm" (closeForm)="closeForm()"></app-board-form>

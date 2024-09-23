@@ -1,5 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
-import { adapter, Column, initialState, SubTask, Task } from './board.state';
+import {
+  adapter,
+  Board,
+  Column,
+  initialState,
+  SubTask,
+  Task,
+} from './board.state';
 import {
   loadBoards,
   addBoard,
@@ -7,12 +14,13 @@ import {
   addColumn,
   addTask,
   updateSubtaskStatus,
+  editTask,
 } from './board.action';
 
 export const boardReducer = createReducer(
   initialState,
   on(loadBoards, (state, { boards }) => {
-    const validBoards = boards.map((board, index) => ({
+    const validBoards = boards.map((board: Board, index: number) => ({
       ...board,
       id: board.id || index,
       columns: board.columns || [],
@@ -33,29 +41,27 @@ export const boardReducer = createReducer(
       state
     );
   }),
-  on(addTask, (state, { boardId, task }) => {
+  on(addTask, (state, { boardId, tasks }) => {
     const board = state.entities[boardId];
-
-    const updatedColumns = board?.columns.map((column: any) => {
-      if (column.id === task.status) {
+    if (!board) return state;
+    const updatedColumns = board.columns.map((column: Column) => {
+      if (column.name === tasks.status) {
         return {
           ...column,
-          tasks: [...column.tasks, task],
+          tasks: [...(column.tasks || []), tasks],
         };
       }
       return column;
     });
-
     return adapter.updateOne(
       {
         id: boardId,
-        changes: {
-          columns: updatedColumns,
-        },
+        changes: { columns: updatedColumns },
       },
       state
     );
   }),
+
   on(
     updateSubtaskStatus,
     (state, { boardId, taskId, subtaskId, isComplete }) => {
@@ -66,7 +72,7 @@ export const boardReducer = createReducer(
       const updatedColumns = board.columns.map((column: Column) => ({
         ...column,
         tasks: column.tasks.map((task: Task) => {
-          if (taskId === taskId) {
+          if (task.id === taskId) {
             return {
               ...task,
               subtasks: task.subtasks.map((subtask: SubTask) => {
@@ -86,5 +92,13 @@ export const boardReducer = createReducer(
         state
       );
     }
-  )
+  ),
+  on(editTask, (state, { taskId, updates }) => {
+    return {
+      ...state,
+      tasks: state.tasks.map((task: { id: string }) =>
+        task.id === taskId ? { ...task, ...updates } : task
+      ),
+    };
+  })
 );

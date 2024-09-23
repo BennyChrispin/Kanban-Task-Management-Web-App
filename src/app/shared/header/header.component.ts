@@ -5,32 +5,44 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { loadBoardColumns } from '../../store/board.action';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectBoardById } from '../../store/board.selectors';
 import { Board } from '../../store/board.state';
+import { selectBoardById } from '../../store/board.selectors';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnChanges {
-  isDarkMode = false;
-  isSidebarVisible: boolean = true;
-  isModalVisible: boolean = false;
-  isModalForm: boolean = false;
+export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
   @Input() board: any[] = [];
   @Input() selectedBoardId: number | null = null;
   @Input() selectedBoardName: string | null = null;
   @Output() selectBoard = new EventEmitter<number | null>();
 
+  isDarkMode = false;
+  isSidebarVisible = true;
+  isModalVisible = false;
+  isModalForm = false;
+  isMobileScreen = false;
+  isSidebarModalVisible = false;
+
   boardColumns$: Observable<any[]> | undefined;
   selectedBoard$!: Observable<Board | undefined>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    this.checkMobileScreen();
+    window.addEventListener(
+      'resize',
+      this.debounce(this.checkMobileScreen.bind(this), 200)
+    );
+  }
 
   ngOnInit(): void {
     this.isDarkMode = localStorage.getItem('theme') === 'dark';
@@ -40,12 +52,46 @@ export class HeaderComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['board'] && this.board.length > 0) {
       if (!this.selectedBoardId) {
-        this.selectedBoardId = this.board[0].id;
-        this.selectedBoardName = this.board[0].name;
-        this.selectBoard.emit(this.selectedBoardId);
-        console.log('Selected Board ID on changes:', this.selectedBoardId);
+        this.selectDefaultBoard();
+      } else {
+        this.selectedBoard$ = this.store.select(
+          selectBoardById(this.selectedBoardId!)
+        );
       }
     }
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener(
+      'resize',
+      this.debounce(this.checkMobileScreen.bind(this), 200)
+    );
+  }
+
+  onSelectBoard(boardItem: any): void {
+    this.selectedBoardId = boardItem.id;
+    this.selectedBoardName = boardItem.name;
+    this.selectBoard.emit(boardItem.id);
+    console.log('Board selected:', boardItem); // Add this line
+  }
+
+  private selectDefaultBoard(): void {
+    this.selectedBoardId = this.board[0].id;
+    this.selectedBoardName = this.board[0].name;
+    this.selectBoard.emit(this.selectedBoardId);
+    console.log('Selected Board ID in HeaderComponent:', this.selectedBoardId);
+  }
+
+  private checkMobileScreen(): void {
+    this.isMobileScreen = window.innerWidth < 768;
+  }
+
+  private updateTheme(): void {
+    document.body.classList.toggle('dark', this.isDarkMode);
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarVisible = !this.isSidebarVisible;
   }
 
   toggleDarkMode(): void {
@@ -54,50 +100,35 @@ export class HeaderComponent implements OnChanges {
     this.updateTheme();
   }
 
-  toggleSidebar(): void {
-    this.isSidebarVisible = !this.isSidebarVisible;
-  }
-
-  updateTheme(): void {
-    if (this.isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
-  onSelectBoard(boardItem: any): void {
-    if (boardItem && boardItem.name) {
-      this.selectedBoardId = boardItem.id;
-      this.selectedBoardName = boardItem.name;
-      this.selectBoard.emit(this.selectedBoardId);
-
-      this.store.dispatch(loadBoardColumns({ boardId: boardItem.id }));
-
-      this.selectedBoard$ = this.store.select(selectBoardById(boardItem.id));
-
-      this.selectedBoard$.subscribe((selectedBoard) => {
-        if (selectedBoard) {
-          console.log('Loaded columns for board:', selectedBoard.columns);
-        }
-      });
-    }
-  }
-
-  handleTaskSelected(event: any): void {
-    console.log('Task selected:', event);
+  toggleSidebarModal(): void {
+    this.isSidebarModalVisible = !this.isSidebarModalVisible;
   }
 
   openModal(): void {
     this.isModalVisible = true;
   }
-  openForm(): void {
-    this.isModalForm = true;
-  }
 
   closeModal(): void {
     this.isModalVisible = false;
   }
+
+  openForm(): void {
+    this.isModalForm = true;
+  }
+
   closeForm(): void {
     this.isModalForm = false;
+  }
+
+  handleTaskSelected(task: any): void {
+    console.log('Task selected:', task);
+  }
+
+  debounce(func: Function, wait: number) {
+    let timeout: ReturnType<typeof setTimeout>;
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
   }
 }

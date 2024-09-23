@@ -1,5 +1,5 @@
 <div
-  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
 >
   <div
     class="bg-white dark:bg-mediumGray rounded-xl shadow-lg w-full max-w-lg p-8 mx-auto"
@@ -128,14 +128,9 @@
             id="selectedColumn"
             formControlName="selectedColumn"
             class="mt-1 p-3 dark:text-white bg-white dark:bg-darkGray block w-full dark:border-[#414552] border border-borderForm rounded-md shadow-sm focus:outline-none focus:ring-primaryLight focus:border-primaryLight"
+            (change)="onStatusChange($event)"
           >
-            <option value="">Select Column</option>
-
-            <option
-              *ngFor="let column of columns"
-              [value]="column.id"
-              class="bg-white p-2 rounded-md"
-            >
+            <option *ngFor="let column of columns" [value]="column.name">
               {{ column.name }}
             </option>
           </select>
