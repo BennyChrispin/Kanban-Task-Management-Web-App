@@ -1,6 +1,6 @@
 <div class="flex min-h-screen">
   <!-- Sidebar for larger screens -->
-  <ng-container *ngIf="!isMobileScreen || isSidebarVisible">
+  <ng-container *ngIf="!isMobileScreen || !isSidebarVisible">
     <ng-container *ngIf="!isSidebarModalVisible">
       <div
         class="flex flex-col bg-white dark:bg-mediumGray w-80 border-r border-lightBlue dark:border-lightGray fixed min-h-screen top-0 left-0"
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <div class="mt-60">
+        <div class="mt-80">
           <!-- Dark mode toggle and Hide Sidebar Button -->
           <div
             class="bg-lightBlue dark:bg-darkGray rounded-lg p-5 flex items-center justify-between px-10 mx-8"
@@ -201,7 +201,7 @@
       </div>
     </div>
 
-    <div class="flex-1 overflow-y-auto mt-24 p-6">
+    <div class="flex-1 overflow-y-auto mt-24 p-6 dark:bg-darkGray">
       <app-board
         [selectedBoardId]="selectedBoardId"
         (onTaskSelected)="handleTaskSelected($event)"
