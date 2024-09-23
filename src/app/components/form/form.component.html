@@ -117,7 +117,25 @@
           </div>
         </div>
 
-        <div class="mb-4 relative">
+        <button
+          type="button"
+          (click)="addSubtask()"
+          class="flex items-center justify-center gap-2 bg-skyRed text-primary dark:bg-darkGray hover:bg-primary hover:text-white duration-300 transition-all ease-in px-4 py-3 mt-2 w-full rounded-full mb-2 font-medium"
+        >
+          <svg
+            width="12"
+            height="12"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+          >
+            <path
+              d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
+            />
+          </svg>
+          Add New Subtask
+        </button>
+
+        <div class="mb-4 mt-2 relative">
           <label
             for="selectedColumn"
             class="block text-base font-medium text-softGray dark:text-white"
